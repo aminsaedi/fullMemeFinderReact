@@ -1,21 +1,49 @@
 .add {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+.add__formTitle {
+  font-size: 4rem;
+}
 .add__fromContainer {
-    width: 80%;
-    border-radius: 50px;
-    background: #e0e0e0;
-    box-shadow: 10px 10px 20px #868686, -10px -10px 20px #ffffff;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-   
-  }
+  width: 80%;
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow: 10px 10px 20px #868686, -10px -10px 20px #ffffff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.add__selectKeyWord {
+  width: 80%;
+  font-family: "Vazir";
+  border-radius: 4rem;
+}
+.add__form__submitButton {
+  margin: 2rem 0;
+  width: 90%;
+  height: 4rem;
+  font-size: 2.5rem;
+  border: 0;
+  border-radius: 33px;
+  background: #e2e6e9;
+  box-shadow: 26px 26px 51px #b3b3b3, -26px -26px 51px #ffffff;
+  outline: 0;
+  font-family: Vazir;
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in;
+}
+.add__form__submitButton:hover{
+    background-color: #fff;
+}

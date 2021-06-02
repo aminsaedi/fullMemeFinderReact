@@ -15,7 +15,7 @@ const Card = ({ image, subTitle, onDownload, onTelegram }) => {
         <FaInfo onClick={() => setShowDetails(!showDetails)} />
       </div>
 
-      <div className={showDetails ? "card__detail" : "card__detail--hide"}>
+      <div className={showDetails ? "card__detail card__detail--show" : "card__detail card__detail--hide"}>
         <p>کیورد های میم</p>
       </div>
     </div>

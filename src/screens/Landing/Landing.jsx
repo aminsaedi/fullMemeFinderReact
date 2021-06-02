@@ -48,8 +48,7 @@ const Landing = (props) => {
         slidesToScroll={1}
         centerMode
       >
-        <Card subTitle="meme 1" image="https://picsum.photos/350" />
-        <Card subTitle="meme 2" image="https://picsum.photos/350" />
+        {[220,221,222,223,224,225].map(id => <Card subTitle="meme 1" image={`https://picsum.photos/id/${id}/300`} />)}
       </Slider>
       <div className="landing__background"></div>
     </div>
