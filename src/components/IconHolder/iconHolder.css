@@ -1,0 +1,10 @@
+.iconHolder {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: #E2E6E9;
+  box-shadow: 0.6rem 0.6rem 1.2rem #b3b3b3, -0.6rem -0.6rem 1.2rem #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

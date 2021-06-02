@@ -1,0 +1,13 @@
+.appInput {
+  height: 4rem;
+  font-size: 2.5rem;
+  border: 0;
+  border-radius: 33px;
+  background: #E2E6E9;
+  box-shadow: 26px 26px 51px #b3b3b3, -26px -26px 51px #ffffff;
+  outline: 0;
+  font-family: Vazir;
+  text-align: right;
+  direction: rtl;
+  padding: 0.5rem 1rem;
+}
