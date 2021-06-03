@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { FaTelegram, FaShare, FaFileDownload, FaDownload } from "react-icons/fa";
+import { FaTelegram, FaShare, FaDownload } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import "./detail.css";

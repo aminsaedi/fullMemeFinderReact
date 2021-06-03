@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import "./card.css";
 
-const Card = ({ image, subTitle, onDownload, onTelegram, onClick }) => {
+const Card = ({ image, subTitle, onTelegram, onClick }) => {
   const [showDetails, setShowDetails] = useState(false);
   return (
     <div className="card">
@@ -16,12 +16,20 @@ const Card = ({ image, subTitle, onDownload, onTelegram, onClick }) => {
         className="card__image"
       />
       <div className="card__actions">
-        <FaFileDownload style={{ cursor: "pointer" }} onClick={onDownload} />
+        <FaFileDownload
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            window.open(image)
+          }}
+        />
         <FaTelegram
           style={{ cursor: "pointer" }}
           onClick={() => toast.success("میم ارسال شد")}
         />
-        <FaShare style={{ cursor: "pointer" }} onClick={() => toast.error("لینک میم کپی شد")} />
+        <FaShare
+          style={{ cursor: "pointer" }}
+          onClick={() => toast.error("لینک میم کپی شد")}
+        />
         <FaInfo
           style={{ cursor: "pointer" }}
           onClick={() => setShowDetails(!showDetails)}
@@ -35,7 +43,7 @@ const Card = ({ image, subTitle, onDownload, onTelegram, onClick }) => {
             : "card__detail card__detail--hide"
         }
       >
-        <p>کیورد های میم</p>
+        <p>{subTitle || "کیورد های میم"}</p>
       </div>
     </div>
   );

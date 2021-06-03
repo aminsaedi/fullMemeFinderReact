@@ -2607,6 +2607,14 @@
     "normalize-path" "^3.0.0"
     "picomatch" "^2.0.4"
 
+"apisauce@^2.1.1":
+  "integrity" "sha512-P4SsLvmsH8BLLruBn/nsO+65j+ChZlGQ2zC5avCIjbWstYS4PgjxeVWtbeVwFGEWX7dEkLp85OvdapGXy1zS8g=="
+  "resolved" "https://registry.npmjs.org/apisauce/-/apisauce-2.1.1.tgz"
+  "version" "2.1.1"
+  dependencies:
+    "axios" "^0.21.1"
+    "ramda" "^0.25.0"
+
 "aproba@^1.1.1":
   "integrity" "sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw=="
   "resolved" "https://registry.npmjs.org/aproba/-/aproba-1.2.0.tgz"
@@ -2828,6 +2836,13 @@
   "integrity" "sha512-V+Nq70NxKhYt89ArVcaNL9FDryB3vQOd+BFXZIfO3RP6rwtj+2yqqqdHEkacutglPaZLkJeuXKCjCJDMGPtPqg=="
   "resolved" "https://registry.npmjs.org/axe-core/-/axe-core-4.1.2.tgz"
   "version" "4.1.2"
+
+"axios@^0.21.1":
+  "integrity" "sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.1.tgz"
+  "version" "0.21.1"
+  dependencies:
+    "follow-redirects" "^1.10.0"
 
 "axobject-query@^2.2.0":
   "integrity" "sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA=="
@@ -5486,7 +5501,7 @@
     "inherits" "^2.0.3"
     "readable-stream" "^2.3.6"
 
-"follow-redirects@^1.0.0":
+"follow-redirects@^1.0.0", "follow-redirects@^1.10.0":
   "integrity" "sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.13.2.tgz"
   "version" "1.13.2"
@@ -7134,6 +7149,11 @@
   "integrity" "sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw=="
   "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
   "version" "3.6.0"
+
+"js-file-downloader@^1.1.19":
+  "integrity" "sha512-mLxP8LDyuXd5+zNhR1AJ8+PKQuO2uAW+j1WG6eq/SIjHw6L6Bw7uaPM/ljcX/hPNGmSCoQMfIrEQo7t4Wo310w=="
+  "resolved" "https://registry.npmjs.org/js-file-downloader/-/js-file-downloader-1.1.19.tgz"
+  "version" "1.1.19"
 
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
@@ -9628,6 +9648,11 @@
   "version" "3.4.1"
   dependencies:
     "performance-now" "^2.1.0"
+
+"ramda@^0.25.0":
+  "integrity" "sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ=="
+  "resolved" "https://registry.npmjs.org/ramda/-/ramda-0.25.0.tgz"
+  "version" "0.25.0"
 
 "randombytes@^2.0.0", "randombytes@^2.0.1", "randombytes@^2.0.5", "randombytes@^2.1.0":
   "integrity" "sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ=="
