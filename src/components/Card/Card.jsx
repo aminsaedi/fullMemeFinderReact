@@ -1,21 +1,40 @@
 import React, { useState } from "react";
-import { FaTelegram, FaInfo, FaFileDownload } from "react-icons/fa";
+import { FaTelegram, FaInfo, FaShare, FaFileDownload } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import "./card.css";
 
-const Card = ({ image, subTitle, onDownload, onTelegram }) => {
+const Card = ({ image, subTitle, onDownload, onTelegram, onClick }) => {
   const [showDetails, setShowDetails] = useState(false);
   return (
     <div className="card">
-      <img aria-label="meme" src={image} className="card__image" />
+      <img
+        aria-label="meme"
+        style={{ cursor: "pointer" }}
+        onClick={onClick}
+        src={image}
+        className="card__image"
+      />
       <div className="card__actions">
-        <FaFileDownload onClick={onDownload} />
-        <FaTelegram onClick={() => toast.success("میم ارسال شد")} />
-        <FaInfo onClick={() => setShowDetails(!showDetails)} />
+        <FaFileDownload style={{ cursor: "pointer" }} onClick={onDownload} />
+        <FaTelegram
+          style={{ cursor: "pointer" }}
+          onClick={() => toast.success("میم ارسال شد")}
+        />
+        <FaShare style={{ cursor: "pointer" }} onClick={() => toast.error("لینک میم کپی شد")} />
+        <FaInfo
+          style={{ cursor: "pointer" }}
+          onClick={() => setShowDetails(!showDetails)}
+        />
       </div>
 
-      <div className={showDetails ? "card__detail card__detail--show" : "card__detail card__detail--hide"}>
+      <div
+        className={
+          showDetails
+            ? "card__detail card__detail--show"
+            : "card__detail card__detail--hide"
+        }
+      >
         <p>کیورد های میم</p>
       </div>
     </div>

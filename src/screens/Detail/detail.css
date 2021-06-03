@@ -13,7 +13,6 @@
   height: 50%;
   text-align: right;
   overflow: auto;
-  padding: 0 0.5rem;
 }
 .detail__memeTitle {
   text-align: center;
@@ -36,9 +35,10 @@
   border-radius: 2rem;
   position: absolute;
 }
-.detail__memeTags{
-    text-align: right;
-    direction: rtl;
+.detail__memeTags {
+  text-align: right;
+  direction: rtl;
+  margin-right: 0.5rem;
 }
 .detail__backgroundImage {
   position: relative;
@@ -57,6 +57,7 @@
   margin: 0.5rem;
   padding: 0rem 2rem;
   cursor: pointer;
+  overflow: hidden;
 }
 .detail__tagsContainer {
   width: 90%;
@@ -65,7 +66,26 @@
   flex-wrap: wrap;
   flex-direction: row-reverse;
 }
-
+.detail__actionsContainer{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+}
+.detail__action{
+  background-color: rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  font-size: 3rem;
+  margin: 2rem 0;
+  border-radius: 3rem;
+  padding-right: 2rem;
+  cursor: pointer;
+}
+.detail__action p{
+  margin-right: 1rem;
+}
 @media screen and (min-width: 970px) {
   .detail {
     flex-direction: row;

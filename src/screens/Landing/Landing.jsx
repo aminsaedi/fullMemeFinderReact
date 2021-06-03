@@ -73,6 +73,7 @@ const Landing = (props) => {
             key={id}
             subTitle="meme 1"
             image={`https://picsum.photos/id/${id}/300`}
+            onClick={ () => props.history.push('/detail')}
           />
         ))}
       </Slider>

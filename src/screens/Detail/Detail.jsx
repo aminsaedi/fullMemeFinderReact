@@ -1,5 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import { FaTelegram, FaShare, FaFileDownload, FaDownload } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 import "./detail.css";
 
@@ -37,8 +39,22 @@ const Detail = () => {
           <span className="detail__tag">گریه</span>
           <span className="detail__tag">سمیه</span>
         </div>
+        <div className="detail__actionsContainer" >
+            <div className="detail__action" onClick={() => toast.success("میم ارسال شد")} >
+                <FaTelegram />
+                <p>ارسال به اکانت تلگرام</p>
+            </div>
+            <div className="detail__action" >
+                <FaDownload />
+                <p>دانلود میم</p>
+            </div>
+            <div className="detail__action" onClick={() => toast.info("لینک میم کپی شد")} >
+                <FaShare />
+                <p>اشتراک گذاری</p>
+            </div>
+        </div>
         <p className="detail__subText">
-          اضافه شده توسط کاربر : امین در تاریخ : ۱۴۰۰/۰۳/۰۵{" "}
+          اضافه شده توسط کاربر : امین در تاریخ : ۱۴۰۰/۰۳/۰۵
         </p>
       </div>
     </div>
