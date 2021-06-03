@@ -2,9 +2,10 @@ import React from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 import AppButton from "../../components/AppButton/AppButton";
+import Select from "react-select";
 import AppInput from "../../components/AppInput/AppInput";
 import IconHolder from "../../components/IconHolder/IconHolder";
 import "./landing.css";
@@ -28,10 +29,26 @@ const Landing = (props) => {
         />
       </div>
       <h1 className="landing__mainText">به میم فایند خوش اومدی</h1>
-      <AppInput
-        style={{ width: "75%", marginTop: "1.5rem", textAlign: "center" }}
-        placeholder="جستجو میم ..."
-      />
+      <Select
+        style={{ width: "100%" }}
+        isRtl
+        className="add__selectKeyWord"
+        options={[
+          { value: "sogand", label: "سوگند" },
+          { value: "zahkmi", label: "زخمی" },
+          { value: "leito", label: "لیتو" },
+          { value: "justina", label: "جاستینا" },
+          { value: "hayedeh", label: "هایده" },
+          { value: "mahasti", label: "مهستی" },
+          { value: "erfan", label: "عرفان" },
+          { value: "gdaal", label: "جیدال" },
+        ]}
+        noOptionsMessage={() => "چیزی نجستم! بزور بگردم؟"}
+        // isLoading
+        isClearable
+        placeholder="دنبال میم میگردی؟"
+
+      ></Select>
       <AppButton
         style={{ width: "75%", marginTop: "1rem" }}
         placeholder="جستجو"
@@ -43,12 +60,21 @@ const Landing = (props) => {
         infinite
         speed={500}
         autoplay
-        style={{ width: "100%", marginTop: "4rem" }}
+        style={{
+          width: "100%",
+          marginTop: "4rem",
+        }}
         slidesToShow={1}
         slidesToScroll={1}
-        centerMode
+        centerMode={true}
       >
-        {[220,221,222,223,224,225].map(id => <Card subTitle="meme 1" image={`https://picsum.photos/id/${id}/300`} />)}
+        {[220, 221, 222, 223, 225].map((id) => (
+          <Card
+            key={id}
+            subTitle="meme 1"
+            image={`https://picsum.photos/id/${id}/300`}
+          />
+        ))}
       </Slider>
       <div className="landing__background"></div>
     </div>

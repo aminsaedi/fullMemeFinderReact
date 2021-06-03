@@ -5,7 +5,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
+
 .landing__topActions {
   display: flex;
   align-items: center;
@@ -20,7 +22,6 @@
   width: 100%;
   justify-content: space-evenly;
   margin-top: 4rem;
-
 }
 .landing__mainText {
   font-size: 3.5rem;

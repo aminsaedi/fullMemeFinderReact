@@ -4,25 +4,28 @@ import CreatableSelect from "react-select/creatable";
 import Dropzone from "react-dropzone";
 
 import "./add.css";
+import IconHolder from "../../components/IconHolder/IconHolder";
 
-const Add = () => {
+
+const Add = (props) => {
   const handleChange = (newValue, actionMeta) => {
     console.group("Value Changed");
     console.log(newValue);
     console.log(`action: ${actionMeta.action}`);
     console.groupEnd();
   };
-  const sa = (strd) => "افزودنه کیورده " + strd;
+  const createPlaceHolder = (strd) => "افزودنه کیورده " + strd;
   return (
     <div className="add">
       <Helmet>
         <title>افزودن میم</title>
       </Helmet>
+      <IconHolder onClick={() => props.history.push('/')} iconName="home" className="register__homeButton" />
       <div className="add__fromContainer">
         <h1 className="add__formTitle">افزودن میم</h1>
         <CreatableSelect
           placeholder="کیورد های میم"
-          formatCreateLabel={sa}
+          formatCreateLabel={createPlaceHolder}
           className="add__selectKeyWord"
           isMulti
           isRtl

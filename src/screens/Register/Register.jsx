@@ -4,29 +4,45 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
-import "./login.css";
+
+import "./register.css";
 import IconHolder from "../../components/IconHolder/IconHolder";
 
-
-const Login = (props) => {
+const Register = (props) => {
   const validationSchema = Yup.object({
     username: Yup.string().required("نام کاربری را وارد کنید"),
+    email: Yup.string()
+      .email("آدرس ایمیل معتبر وارد کنید")
+      .required("آدرس ایمیل را وارد کنید"),
     password: Yup.string().required("رمز عبور را وارد کنید"),
   });
   const formik = useFormik({
-    initialValues: { username: "", password: "" },
+    initialValues: { email: "", username: "", password: "", image: undefined },
     onSubmit: (values) => alert(JSON.stringify(values)),
     validationSchema,
   });
   return (
-    <div className="login">
+    <div className="register">
       <Helmet>
-        <title>ورود به میم فایندر</title>
+        <title>ثبت نام در میم فایندر</title>
       </Helmet>
       <IconHolder onClick={() => props.history.push('/')} iconName="home" className="register__homeButton" />
-      <div className="login__fromContainer">
-        <h1 className="login__lable">ورود به میم فایندر</h1>
-        <form className="login__form" onSubmit={formik.handleSubmit}>
+      <div className="register__fromContainer">
+        <h1 className="register__lable">ثبت نام در میم فایندر</h1>
+        <form onSubmit={formik.handleSubmit} className="register__form">
+          <label className="login__form__lable" htmlFor="password">
+            آدرس ایمیل
+          </label>
+          <input
+            className="login__form__input"
+            id="email"
+            type="email"
+            {...formik.getFieldProps("email")}
+            placeholder="example@sample.com"
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="login__form__error">{formik.errors.email}</div>
+          ) : null}
           <label className="login__form__lable" htmlFor="username">
             نام کاربری
           </label>
@@ -35,6 +51,7 @@ const Login = (props) => {
             id="username"
             type="username"
             {...formik.getFieldProps("username")}
+            placeholder="username"
           />
           {formik.touched.username && formik.errors.username ? (
             <div className="login__form__error">{formik.errors.username}</div>
@@ -47,6 +64,7 @@ const Login = (props) => {
             id="password"
             type="password"
             {...formik.getFieldProps("password")}
+            placeholder="password"
           />
           {formik.touched.password && formik.errors.password ? (
             <div className="login__form__error">{formik.errors.password}</div>
@@ -56,22 +74,19 @@ const Login = (props) => {
             type="submit"
             className="login__form__submitButton"
           >
-            ورود
+            ثبت نام
           </button>
         </form>
         <Link
-          to="/register"
+          to="/login"
           className="login__subText"
           style={{ textDecoration: "none",marginTop : "0.5rem",color : "black" }}
         >
-          اکانت نداری؟ خب یکی بساز
+          اکانت داری؟ خب برو توش
         </Link>
       </div>
-      <p className="login__subText">
-        کلمه عبور خود را فراموش کرده اید؟<i> اینجا کلیلک کنید</i>
-      </p>
     </div>
   );
 };
 
-export default Login;
+export default Register;

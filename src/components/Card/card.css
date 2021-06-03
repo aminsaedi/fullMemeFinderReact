@@ -1,6 +1,6 @@
 .card {
   width: 100%;
-  max-width: 35rem;
+  /* max-width: 35rem; */
   height: 35rem;
   border-radius: 50px;
   background: #e0e0e0;
@@ -56,4 +56,13 @@
 .card__detail--show {
   height: 25%;
 
+}
+
+@media screen and (min-width : 970px) {
+  .card{
+    max-width: 35rem;
+    margin: auto;
+    margin-bottom: 2.5rem;
+    margin-top: 2rem;
+  }
 }

@@ -1,0 +1,81 @@
+.detail {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.detail__textContainer {
+  background-color: #8ec5fc;
+  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+  flex-grow: 1;
+  width: 100%;
+  height: 50%;
+  text-align: right;
+  overflow: auto;
+  padding: 0 0.5rem;
+}
+.detail__memeTitle {
+  text-align: center;
+  font-size: 4rem;
+}
+.detail__subText {
+  font-size: 2rem;
+}
+.detail__imageContainer {
+  flex-grow: 1;
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail__mainImage {
+  width: 80%;
+  max-width: 45rem;
+  border-radius: 2rem;
+  position: absolute;
+}
+.detail__memeTags{
+    text-align: right;
+    direction: rtl;
+}
+.detail__backgroundImage {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(10px);
+  transform: scale(1.05);
+}
+.detail__tag {
+  height: 3rem;
+  font-size: 2rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 2rem;
+  margin: 0.5rem;
+  padding: 0rem 2rem;
+  cursor: pointer;
+}
+.detail__tagsContainer {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+
+@media screen and (min-width: 970px) {
+  .detail {
+    flex-direction: row;
+  }
+  .detail__imageContainer {
+    height: 100%;
+    width: 50%;
+  }
+  .detail__textContainer {
+    height: 100%;
+    width: 50%;
+  }
+}

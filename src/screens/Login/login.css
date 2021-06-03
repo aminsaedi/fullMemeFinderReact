@@ -17,11 +17,11 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 5rem 2rem;
+  padding: 3rem 2rem 1rem 2rem;
 }
 .login__lable{
     margin: 0;
-    font-style: 4rem;
+    font-size: 4rem;
 }
 .login__form {
   display: flex;

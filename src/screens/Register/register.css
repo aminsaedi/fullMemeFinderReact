@@ -1,0 +1,83 @@
+.register {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.register__fromContainer {
+  width: 80%;
+  border-radius: 50px;
+  background: #e0e0e0;
+
+  box-shadow: 10px 10px 20px #868686, -10px -10px 20px #ffffff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 3rem 2rem 1rem 2rem;
+}
+.register__lable {
+  margin: 0;
+  font-size: 4rem;
+}
+.register__form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+.register__form__lable,
+.register__form__input {
+  display: block;
+}
+.register__form__lable {
+  margin-top: 1.5rem;
+}
+.register__form__input {
+  width: 95%;
+  height: 4rem;
+  text-align: center;
+  font-size: 3rem;
+  border-radius: 2rem;
+  border: 0;
+  margin-top: 0.5rem;
+  outline: 0;
+}
+.register__form__submitButton {
+  margin-top: 2rem;
+  width: 90%;
+  height: 4rem;
+  font-size: 2.5rem;
+  border: 0;
+  border-radius: 33px;
+  background: #e2e6e9;
+  box-shadow: 26px 26px 51px #b3b3b3, -26px -26px 51px #ffffff;
+  outline: 0;
+  font-family: Vazir;
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in;
+}
+.register__form__submitButton:hover {
+  background-color: #fff;
+}
+.register__subText {
+  text-align: center;
+  font-size: 1.5rem;
+}
+.register__form__error {
+  color: tomato;
+}
+.register__homeButton {
+  position: fixed;
+  top: 1%;
+  left: 2%;
+}
