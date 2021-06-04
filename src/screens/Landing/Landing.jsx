@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 
 import AuthContext from "../../auth/context";
+import { removeToken } from "../../auth/storage";
 import AppButton from "../../components/AppButton/AppButton";
 import Select from "react-select";
 import IconHolder from "../../components/IconHolder/IconHolder";
@@ -16,7 +17,7 @@ import { getWelcomeMessage } from "../../api/main";
 import { getKeywords } from "../../api/keywords";
 
 const Landing = (props) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [memes, setMemes] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
@@ -62,8 +63,15 @@ const Landing = (props) => {
           onClick={() => props.history.push("/add")}
         />
         <IconHolder
-          iconName={user ? "people" : "person"}
-          onClick={() => props.history.push("/login")}
+          image={user ? user.image : null}
+          iconName={!user ? "person" : null}
+          onClick={() => {
+            if (!user) props.history.push("/login");
+            else {
+              removeToken();
+              window.location = "/";
+            }
+          }}
         />
       </div>
       <h1 className="landing__mainText">به میم فایند خوش اومدی</h1>

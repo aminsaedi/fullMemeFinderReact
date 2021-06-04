@@ -2,7 +2,7 @@
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
-  background: #E2E6E9;
+  background: #e2e6e9;
   box-shadow: 0.6rem 0.6rem 1.2rem #b3b3b3, -0.6rem -0.6rem 1.2rem #ffffff;
   display: flex;
   align-items: center;
@@ -10,6 +10,11 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.iconHolder:hover{
+.iconHolder:hover {
   background: #f0f0f0;
+}
+.iconHolder__image{
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
 }

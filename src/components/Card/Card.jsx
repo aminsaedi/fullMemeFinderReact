@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { FaTelegram, FaInfo, FaHeart, FaFileDownload } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 import "./card.css";
 
-const Card = ({ image, subTitle, onTelegram, onClick }) => {
+const Card = ({ image, subTitle, onTelegram,onLike, onClick }) => {
   const [showDetails, setShowDetails] = useState(false);
   return (
     <div className="card">
@@ -17,21 +16,21 @@ const Card = ({ image, subTitle, onTelegram, onClick }) => {
       />
       <div className="card__actions">
         <FaFileDownload
-          style={{ cursor: "pointer",color : "gold" }}
+          style={{ cursor: "pointer", color: "gold" }}
           onClick={() => {
-            window.open(image)
+            window.open(image);
           }}
         />
         <FaTelegram
-          style={{ cursor: "pointer",color : "#2AA5E0" }}
-          onClick={() => toast.success("میم ارسال شد")}
+          style={{ cursor: "pointer", color: "#2AA5E0" }}
+          onClick={onTelegram}
         />
         <FaHeart
-          style={{ cursor: "pointer",color : "red" }}
-          onClick={() => toast.error("لینک میم کپی شد")}
+          style={{ cursor: "pointer", color: "red" }}
+          onClick={onLike}
         />
         <FaInfo
-          style={{ cursor: "pointer",color : "yellowgreen" }}
+          style={{ cursor: "pointer", color: "yellowgreen" }}
           onClick={() => setShowDetails(!showDetails)}
         />
       </div>

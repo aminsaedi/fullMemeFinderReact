@@ -16,7 +16,8 @@ const IconHolder = ({
       onClick={onClick}
       style={style}
     >
-      <Icon fontSize="large">{iconName}</Icon>
+      {!image && <Icon fontSize="large">{iconName}</Icon>}
+      {image && <img className="iconHolder__image" src={image} alt="user" />}
     </div>
   );
 };
