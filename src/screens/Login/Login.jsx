@@ -3,19 +3,35 @@ import { Helmet } from "react-helmet";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
+import { storeToken } from "../../auth/storage";
 import "./login.css";
 import IconHolder from "../../components/IconHolder/IconHolder";
-
+import { loginUser } from "../../api/users";
 
 const Login = (props) => {
   const validationSchema = Yup.object({
-    username: Yup.string().required("نام کاربری را وارد کنید"),
+    user: Yup.string().required("نام کاربری را وارد کنید"),
     password: Yup.string().required("رمز عبور را وارد کنید"),
   });
+
+  const handleLogin = async (values) => {
+    const result = await loginUser(values);
+    if (result.status === 200) {
+      toast.info("ورود موفقیت آمیز بود");
+      storeToken(result.data);
+      window.location = "/";
+    } else if (result.status !== 200) {
+      toast.error("مشکل داریم");
+      if (result.data) return toast.error(result.data.message);
+      else if (!result.data) return toast.error("خطا در ورود کاربر");
+    }
+  };
+
   const formik = useFormik({
-    initialValues: { username: "", password: "" },
-    onSubmit: (values) => alert(JSON.stringify(values)),
+    initialValues: { user: "", password: "" },
+    onSubmit: handleLogin,
     validationSchema,
   });
   return (
@@ -23,21 +39,25 @@ const Login = (props) => {
       <Helmet>
         <title>ورود به میم فایندر</title>
       </Helmet>
-      <IconHolder onClick={() => props.history.push('/')} iconName="home" className="register__homeButton" />
+      <IconHolder
+        onClick={() => props.history.push("/")}
+        iconName="home"
+        className="register__homeButton"
+      />
       <div className="login__fromContainer">
         <h1 className="login__lable">ورود به میم فایندر</h1>
         <form className="login__form" onSubmit={formik.handleSubmit}>
-          <label className="login__form__lable" htmlFor="username">
-            نام کاربری
+          <label className="login__form__lable" htmlFor="user">
+            ایمیل یا نام کاربری
           </label>
           <input
             className="login__form__input"
-            id="username"
-            type="username"
-            {...formik.getFieldProps("username")}
+            id="user"
+            type="user"
+            {...formik.getFieldProps("user")}
           />
-          {formik.touched.username && formik.errors.username ? (
-            <div className="login__form__error">{formik.errors.username}</div>
+          {formik.touched.user && formik.errors.user ? (
+            <div className="login__form__error">{formik.errors.user}</div>
           ) : null}
           <label className="login__form__lable" htmlFor="password">
             کلمه عبور
@@ -62,7 +82,11 @@ const Login = (props) => {
         <Link
           to="/register"
           className="login__subText"
-          style={{ textDecoration: "none",marginTop : "0.5rem",color : "black" }}
+          style={{
+            textDecoration: "none",
+            marginTop: "0.5rem",
+            color: "black",
+          }}
         >
           اکانت نداری؟ خب یکی بساز
         </Link>

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 
+import AuthContext from "../../auth/context";
 import AppButton from "../../components/AppButton/AppButton";
 import Select from "react-select";
 import IconHolder from "../../components/IconHolder/IconHolder";
@@ -12,9 +13,13 @@ import "./landing.css";
 import Card from "../../components/Card/Card";
 import { getAllMemes } from "../../api/memes";
 import { getWelcomeMessage } from "../../api/main";
+import { getKeywords } from "../../api/keywords";
 
 const Landing = (props) => {
+  const { user, setUser } = useContext(AuthContext);
   const [memes, setMemes] = useState([]);
+  const [keywords, setKeywords] = useState([]);
+  const [selectedKeyword, setSelectedKeyword] = useState(null);
   const getMemes = async () => {
     const result = await getAllMemes(5);
     if (result.status !== 200)
@@ -24,11 +29,26 @@ const Landing = (props) => {
   const getServerMessage = async () => {
     const result = await getWelcomeMessage();
     if (result.status !== 200) return toast.error("خطا در ارتباط با سرور");
-    else if (result.status === 200) return toast.info(result.data.message,{position : "bottom-center"});
+    else if (result.status === 200)
+      return toast.info(result.data.message, { position: "bottom-center" });
+  };
+  const getAllKeywords = async () => {
+    const result = await getKeywords();
+    if (result.status !== 200) {
+      if (result.data) return toast.error(result.data.message);
+      else return toast.error("خطا در دیافت کیورد ها از سرور");
+    }
+    if (result.status === 200) return setKeywords(result.data);
+  };
+  const filterKeywords = (keys) => {
+    let newKeys = [];
+    newKeys = keys.map((key) => ({ value: key._id, label: key.title }));
+    return newKeys;
   };
   useEffect(() => {
     getMemes();
     getServerMessage();
+    getAllKeywords();
   }, []);
   return (
     <div className="landing">
@@ -42,7 +62,7 @@ const Landing = (props) => {
           onClick={() => props.history.push("/add")}
         />
         <IconHolder
-          iconName="person"
+          iconName={user ? "people" : "person"}
           onClick={() => props.history.push("/login")}
         />
       </div>
@@ -51,23 +71,19 @@ const Landing = (props) => {
         style={{ width: "100%" }}
         isRtl
         className="add__selectKeyWord"
-        options={[
-          { value: "sogand", label: "سوگند" },
-          { value: "zahkmi", label: "زخمی" },
-          { value: "leito", label: "لیتو" },
-          { value: "justina", label: "جاستینا" },
-          { value: "hayedeh", label: "هایده" },
-          { value: "mahasti", label: "مهستی" },
-          { value: "erfan", label: "عرفان" },
-          { value: "gdaal", label: "جیدال" },
-        ]}
+        onChange={(selected) => setSelectedKeyword(selected)}
+        options={filterKeywords(keywords)}
         noOptionsMessage={() => "چیزی نجستم! بزور بگردم؟"}
         // isLoading
         isClearable
         placeholder="دنبال میم میگردی؟"
       ></Select>
       <AppButton
-        style={{ width: "75%", marginTop: "1rem" }}
+        style={{
+          width: "75%",
+          marginTop: "1rem",
+          cursor: selectedKeyword ? "pointer" : "not-allowed",
+        }}
         placeholder="جستجو"
       />
       {memes && (

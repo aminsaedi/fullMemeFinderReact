@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaTelegram, FaInfo, FaShare, FaFileDownload } from "react-icons/fa";
+import { FaTelegram, FaInfo, FaHeart, FaFileDownload } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import "./card.css";
@@ -17,21 +17,21 @@ const Card = ({ image, subTitle, onTelegram, onClick }) => {
       />
       <div className="card__actions">
         <FaFileDownload
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer",color : "gold" }}
           onClick={() => {
             window.open(image)
           }}
         />
         <FaTelegram
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer",color : "#2AA5E0" }}
           onClick={() => toast.success("میم ارسال شد")}
         />
-        <FaShare
-          style={{ cursor: "pointer" }}
+        <FaHeart
+          style={{ cursor: "pointer",color : "red" }}
           onClick={() => toast.error("لینک میم کپی شد")}
         />
         <FaInfo
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer",color : "yellowgreen" }}
           onClick={() => setShowDetails(!showDetails)}
         />
       </div>
