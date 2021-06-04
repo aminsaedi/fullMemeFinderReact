@@ -12,8 +12,8 @@ import Select from "react-select";
 import IconHolder from "../../components/IconHolder/IconHolder";
 import "./landing.css";
 import Card from "../../components/Card/Card";
-import { getAllMemes, sendMemeOnTelegram } from "../../api/memes";
-import { getWelcomeMessage } from "../../api/main";
+import { getAllMemes } from "../../api/memes";
+// import { getWelcomeMessage } from "../../api/main";
 import { getKeywords } from "../../api/keywords";
 import likeMemeHelper from "../../utilities/likeMeme";
 import telegramMemeHelper from '../../utilities/telegramMeme'
@@ -54,6 +54,7 @@ const Landing = (props) => {
     // getServerMessage();
     getAllKeywords();
   }, []);
+  
   return (
     <div className="landing">
       <Helmet>
@@ -119,7 +120,7 @@ const Landing = (props) => {
               meme={meme}
               subTitle={meme.keywords.map((key) => key.title).join(" ")}
               image={meme.file}
-              onClick={() => props.history.push("/detail")}
+              onClick={() => props.history.push("/detail/" + meme._id)}
               onLike={async () => {
                 await likeMemeHelper(user, meme, meme.likes);
                 await getMemes();

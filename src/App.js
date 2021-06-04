@@ -12,6 +12,8 @@ import Detail from "./screens/Detail/Detail";
 import Landing from "./screens/Landing/Landing";
 import Login from "./screens/Login/Login";
 import Register from "./screens/Register/Register";
+import Search from "./screens/Search/Search";
+
 
 
 const override = css`
@@ -33,7 +35,8 @@ const App = () => {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <Switch>
-        <Route path="/detail" component={Detail} />
+        <Route path="/search" component={Search} />
+        <Route path="/detail/:id" component={Detail} />
         <Route path="/add" component={Add} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />

@@ -9,6 +9,9 @@ export const getAllMemes = (limit) => {
   return trackPromise(client.get(base + "/"));
 };
 
+export const getMemeById = (memeId) =>
+  trackPromise(client.get(base + "/" + memeId));
+
 export const postNewMeme = (formData) =>
   trackPromise(client.post(base, formData));
 
@@ -17,3 +20,5 @@ export const sendMemeOnTelegram = (memeId) =>
 
 export const likeMeme = (memeId, dislike = false) =>
   trackPromise(client.put(base + "/" + memeId, { dislike }));
+
+export const searchMemes = (skip = 0,limit = 16,keywords,createdByUser,sortBy) => client.get(base + "/")

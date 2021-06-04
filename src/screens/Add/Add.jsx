@@ -112,7 +112,6 @@ const Add = (props) => {
           onDrop={(acceptedFiles) => {
             toast.info("میم انتخاب شد");
             setSelectedImage(acceptedFiles[0]);
-            console.log(URL.createObjectURL(acceptedFiles[0]));
           }}
         >
           {({ getRootProps, getInputProps }) => (

@@ -1,0 +1,32 @@
+.buttonGroup {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 5px; */
+}
+.buttonGroup__container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #bbc3ce;
+  /* height: 50px; */
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+}
+.buttonGroup__item {
+  /* flex-grow: 1; */
+  margin: 5px;
+  text-align: center;
+  color: black;
+  width: 50%;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+.buttonGroup__item--active {
+  background: #606cec;
+  box-shadow: 0 0 10px rgb(96 108 236 / 70%);
+  color: #fff;
+  cursor: default;
+}

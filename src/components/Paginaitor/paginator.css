@@ -1,0 +1,49 @@
+.paginator {
+  background: #eceef3;
+  /* background: red; */
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  /* margin: 2rem 1.5rem 0; */
+  padding: 1.2rem;
+  text-align: center;
+  font-size: 14px;
+}
+.paginaitor__button {
+  height: 45;
+  background: #606cec;
+  box-shadow: 0 3px 6px rgb(96 108 236 / 15%), 0 1px 3px rgb(0 0 0 / 11%);
+  padding: 1rem;
+  min-width: 5rem;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.paginaitor__button--disabled {
+  cursor: not-allowed;
+  background: #e8e8e8;
+  color: #b9b9b9;
+  box-shadow: none;
+}
+
+.paginaitorInfoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+@media screen and (min-width: 970px) {
+  .paginator {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .paginaitorInfoContainer {
+    margin: 0;
+  }
+}
