@@ -12,7 +12,8 @@ export const getAllMemes = (limit) => {
 export const postNewMeme = (formData) =>
   trackPromise(client.post(base, formData));
 
-export const setMemeOnTelegram = (memeId) =>
-  trackPromise(client.post(base + "/telegram" + memeId));
+export const sendMemeOnTelegram = (memeId) =>
+  trackPromise(client.get(base + "/telegram/" + memeId));
 
-export const likeMeme = (memeId) => trackPromise(client.get(base + '/like/' + memeId))
+export const likeMeme = (memeId, dislike = false) =>
+  trackPromise(client.put(base + "/" + memeId, { dislike }));

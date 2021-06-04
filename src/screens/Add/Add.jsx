@@ -77,7 +77,7 @@ const Add = (props) => {
     formData.append("image", selectedImage);
     const result = await postNewMeme(formData);
     if (result.status === 200) toast("میم با موفقیت افزوده شد");
-    else if (result.status !== 200) alert(result.data.error)
+    else if (result.status !== 200) alert(result.status)
   };
   return (
     <div className="add">

@@ -21,7 +21,6 @@ const override = css`
 `;
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
   const { promiseInProgress } = usePromiseTracker();
   const restoreUser = () => {
@@ -41,7 +40,7 @@ const App = () => {
         <Route path="/" exact component={Landing} />
       </Switch>
       {promiseInProgress && <div class="loaderContainer">
-        <HashLoader  color={"#3498DB"} loading={loading} css={override} size={150} />
+        <HashLoader  color={"#3498DB"} loading={true} css={override} size={150} />
       </div>}
     </AuthContext.Provider>
   );

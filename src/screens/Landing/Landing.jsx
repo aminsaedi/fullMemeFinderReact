@@ -12,9 +12,11 @@ import Select from "react-select";
 import IconHolder from "../../components/IconHolder/IconHolder";
 import "./landing.css";
 import Card from "../../components/Card/Card";
-import { getAllMemes } from "../../api/memes";
+import { getAllMemes, sendMemeOnTelegram } from "../../api/memes";
 import { getWelcomeMessage } from "../../api/main";
 import { getKeywords } from "../../api/keywords";
+import likeMemeHelper from "../../utilities/likeMeme";
+import telegramMemeHelper from '../../utilities/telegramMeme'
 
 const Landing = (props) => {
   const { user } = useContext(AuthContext);
@@ -23,16 +25,17 @@ const Landing = (props) => {
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const getMemes = async () => {
     const result = await getAllMemes(5);
-    if (result.status !== 200)
-      return toast.error(result.data.message || "خطا در ارتباط با سرور");
+    if (!result.status) return toast.error("خطا در ارتباط با سرور");
+    else if (result.status && result.status !== 200)
+      return toast.error(result.data.message);
     else if (result.status === 200) return setMemes(result.data);
   };
-  const getServerMessage = async () => {
-    const result = await getWelcomeMessage();
-    if (result.status !== 200) return toast.error("خطا در ارتباط با سرور");
-    else if (result.status === 200)
-      return toast.info(result.data.message, { position: "bottom-center" });
-  };
+  // const getServerMessage = async () => {
+  //   const result = await getWelcomeMessage();
+  //   if (result.status !== 200) return toast.error("خطا در ارتباط با سرور");
+  //   else if (result.status === 200)
+  //     return toast.info(result.data.message, { position: "bottom-center" });
+  // };
   const getAllKeywords = async () => {
     const result = await getKeywords();
     if (result.status !== 200) {
@@ -48,7 +51,7 @@ const Landing = (props) => {
   };
   useEffect(() => {
     getMemes();
-    getServerMessage();
+    // getServerMessage();
     getAllKeywords();
   }, []);
   return (
@@ -113,9 +116,16 @@ const Landing = (props) => {
           {memes.map((meme) => (
             <Card
               key={meme._id}
+              meme={meme}
               subTitle={meme.keywords.map((key) => key.title).join(" ")}
               image={meme.file}
               onClick={() => props.history.push("/detail")}
+              onLike={async () => {
+                await likeMemeHelper(user, meme, meme.likes);
+                await getMemes();
+              }}
+              likes={meme.likes}
+              onTelegram={() => telegramMemeHelper(user,meme._id)}
             />
           ))}
         </Slider>

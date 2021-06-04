@@ -2,7 +2,7 @@ import { create } from "apisauce";
 
 import {getToken} from '../auth/storage'
 
-const client = create({ baseURL: "http://localhost:9000" });
+const client = create({ baseURL: "http://192.168.1.101:9000" });
 
 client.addAsyncRequestTransform(async (request) => {
     const authToken =  getToken();
