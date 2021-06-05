@@ -8,6 +8,7 @@
   margin-bottom: 3rem;
   overflow: hidden;
   position: relative;
+  direction: ltr;
 }
 .card__image {
   position: absolute;

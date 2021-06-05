@@ -42,7 +42,7 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/" exact component={Landing} />
       </Switch>
-      {promiseInProgress && <div class="loaderContainer">
+      {promiseInProgress && <div className="loaderContainer">
         <HashLoader  color={"#3498DB"} loading={true} css={override} size={150} />
       </div>}
     </AuthContext.Provider>

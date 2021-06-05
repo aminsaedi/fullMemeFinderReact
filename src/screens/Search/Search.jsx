@@ -1,22 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Select from "react-select";
 import ReactiveButton from "reactive-button";
 import { toast } from "react-toastify";
 
+import AuthContext from "../../auth/context";
+import likeMemeHelper from "../../utilities/likeMeme";
+import telegramHelper from "../../utilities/telegramMeme";
+import Card from "../../components/Card/Card";
 import ButtonGroup from "../../components/ButtonGroup/ButtonGroup";
 import { getKeywords } from "../../api/keywords";
 import "./search.css";
 import Paginaitor from "../../components/Paginaitor/Paginaitor";
+import { searchMemes } from "../../api/memes";
 
 const Search = (props) => {
+  const { user } = useContext(AuthContext);
   const [state, setState] = useState("idle");
   const [keywords, setKeywords] = useState([]);
+  const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [memes, setMemes] = useState([]);
   const [onlyByRegisteredUsers, setOnlyByRegisteredUsers] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [sortBy, setSortBy] = useState("newest");
+  const [totalItems, setTotalItems] = useState(0);
 
   const sortValues = [
-    { value: "newest", label: "جدید ترین" },
-    { value: "oldest", label: "قدیمی ترین" },
+    { value: "createDate", label: "جدید ترین" },
+    { value: "-createDate", label: "قدیمی ترین" },
     { value: "byLikes", label: "بیشترن لایک" },
     { value: "-byLikes", label: "کمترین لایک" },
   ];
@@ -29,6 +42,26 @@ const Search = (props) => {
     }
     if (result.status === 200) return setKeywords(result.data);
   };
+
+  const getFilteredMemes = async () => {
+    setState("loading");
+    const result = await searchMemes(
+      currentPage,
+      16,
+      selectedKeywords,
+      onlyByRegisteredUsers,
+      sortBy
+    );
+    if (result.status && result.status === 200) {
+      setMemes(result.data.docs);
+      setTotalItems(result.data.totalDocs);
+      setTotalPages(result.data.totalPages);
+      setHasPrevPage(result.data.hasPrevPage);
+      setHasNextPage(result.data.hasNextPage);
+      setState("success");
+    } else setState("error");
+  };
+
   const filterKeywords = (keys) => {
     let newKeys = [];
     newKeys = keys.map((key) => ({ value: key._id, label: key.title }));
@@ -40,13 +73,27 @@ const Search = (props) => {
     else if (item.id === false) setOnlyByRegisteredUsers(false);
   };
   const onClickHandler = () => {
-    setState("loading");
-    setTimeout(() => {
-      setState("error");
-    }, 20000);
+    getFilteredMemes();
   };
 
-  useEffect(() => getAllKeywords(), []);
+  const handleKeywordsSelector = (newValues, actionMeta) => {
+    const newModel = newValues.map((value) => value.value);
+    setSelectedKeywords(newModel);
+  };
+
+  const handleSortSelector = (newValue) => {
+    setSortBy(newValue.value);
+  };
+
+  useEffect(() => {
+    getAllKeywords();
+    getFilteredMemes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    getFilteredMemes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   return (
     <div className="search">
@@ -59,6 +106,7 @@ const Search = (props) => {
             options={sortValues}
             defaultValue={sortValues[0]}
             isRtl
+            onChange={handleSortSelector}
           />
         </div>
         <div className="search__action">
@@ -80,6 +128,7 @@ const Search = (props) => {
             isMulti
             placeholder="دسته بندی"
             isRtl
+            onChange={handleKeywordsSelector}
           />
         </div>
         <div className="search__action search__action__button">
@@ -94,18 +143,40 @@ const Search = (props) => {
             rounded
             animation
             block
-            messageDuration={4000}
+            messageDuration={2000}
             style={{ fontFamily: "Vazir", fontSize: "1.8rem" }}
           />
         </div>
       </div>
-      <div className="search__results"></div>
+      <div className="search__results">
+        {memes &&
+          memes.map((meme) => (
+            <Card
+              key={meme._id}
+              meme={meme}
+              likes={meme.likes}
+              onClick={() => props.history.push("/detail/" + meme._id)}
+              onLike={async () => {
+                await likeMemeHelper(user, meme, meme.likes);
+                await getFilteredMemes();
+              }}
+              onTelegram={() => telegramHelper(user, meme._id)}
+            />
+          ))}
+      </div>
       <div className="search__paginationContainer">
         <Paginaitor
-          onChange={(action) => action === "nextPage" ? setCurrentPage(currentPage + 1) : setCurrentPage(currentPage - 1)}
-          totalItems={200}
+          onChange={(action) =>
+            action === "nextPage"
+              ? setCurrentPage(currentPage + 1)
+              : setCurrentPage(currentPage - 1)
+          }
+          totalItems={totalItems}
           currentPage={currentPage}
           itemPerPage={16}
+          hasNextPage={hasNextPage}
+          hasPrevPage={hasPrevPage}
+          totalPages={totalPages}
         />
       </div>
     </div>

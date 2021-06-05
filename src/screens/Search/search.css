@@ -43,6 +43,7 @@
 }
 .search__optionsSelector {
   width: 100%;
+  z-index: 100;
 }
 
 /* Paginator */
@@ -50,6 +51,18 @@
   width: 98%;
   margin: 0 auto;
   margin-bottom: 30px;
+}
+
+/* Results */
+.search__results {
+  direction: rtl;
+  width: 98%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 20px;
 }
 
 @media screen and (min-width: 970px) {
@@ -62,5 +75,13 @@
   }
   .search__action__button {
     padding-top: 2.5rem;
+  }
+  .search__results {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 2rem;
+    grid-row-gap: 0.5rem;
   }
 }

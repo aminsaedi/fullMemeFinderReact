@@ -21,4 +21,21 @@ export const sendMemeOnTelegram = (memeId) =>
 export const likeMeme = (memeId, dislike = false) =>
   trackPromise(client.put(base + "/" + memeId, { dislike }));
 
-export const searchMemes = (skip = 0,limit = 16,keywords,createdByUser,sortBy) => client.get(base + "/")
+export const searchMemes = (
+  page = 0,
+  limit = 16,
+  keywords,
+  createdByUser = false,
+  sortBy
+) => {
+  let stringModel = "";
+  keywords && keywords.forEach((key) => {
+    stringModel = stringModel.concat(`&keywords=${key}`);
+  });
+  return trackPromise(
+    client.get(
+      base +
+        `/search?page=${page}&limit=${limit}&sortBy=${sortBy}&createdByUser=${createdByUser}${stringModel}`
+    )
+  );
+};

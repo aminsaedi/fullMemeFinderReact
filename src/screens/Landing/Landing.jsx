@@ -24,7 +24,7 @@ const Landing = (props) => {
   const [keywords, setKeywords] = useState([]);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const getMemes = async () => {
-    const result = await getAllMemes(5);
+    const result = await getAllMemes(10);
     if (!result.status) return toast.error("خطا در ارتباط با سرور");
     else if (result.status && result.status !== 200)
       return toast.error(result.data.message);

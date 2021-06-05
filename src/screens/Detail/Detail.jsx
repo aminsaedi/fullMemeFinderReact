@@ -19,6 +19,7 @@ const Detail = () => {
   };
   useEffect(() => {
     getMeme();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   if (!meme) return null;
   return (

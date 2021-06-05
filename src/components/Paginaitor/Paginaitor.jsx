@@ -5,17 +5,18 @@ import "./paginator.css";
 const Paginaitor = ({
   totalItems = 100,
   onChange,
-  itemPerPage = 16,
   currentPage = 1,
+  hasPrevPage = false,
+  hasNextPage = false,
+  totalPages = 1,
 }) => {
-  const totalPages = Math.ceil(totalItems / itemPerPage);
   return (
     <div className="paginator">
       <div
         className={
-          currentPage === 1
-            ? "paginaitor__button paginaitor__button--disabled"
-            : "paginaitor__button"
+          hasPrevPage
+            ? "paginaitor__button"
+            : "paginaitor__button paginaitor__button--disabled"
         }
         onClick={() => (currentPage > 1 ? onChange("perviousPage") : null)}
       >
@@ -27,9 +28,9 @@ const Paginaitor = ({
       </div>
       <div
         className={
-          currentPage >= totalPages
-            ? "paginaitor__button paginaitor__button--disabled"
-            : "paginaitor__button"
+          hasNextPage
+            ? "paginaitor__button"
+            : "paginaitor__button paginaitor__button--disabled"
         }
         onClick={() => (currentPage < totalPages ? onChange("nextPage") : null)}
       >
