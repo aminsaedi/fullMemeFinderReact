@@ -22,7 +22,7 @@ export const registerUser = (userData) =>
 
 /**
  * api request to retest user telegram account setting to defualt values
- * @param {password} user account password
+ * @param {password} user user account password
  * @returns Promis of state of reseting user telegram account
  */
 export const resetTelegram = (password) =>

@@ -3,12 +3,23 @@ import { Helmet } from "react-helmet";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-
+import { toast } from "react-toastify";
 
 import "./register.css";
-import IconHolder from "../../components/IconHolder/IconHolder";
+import { registerUser } from "../../api/users";
+import { storeToken } from "../../auth/storage";
 
 const Register = (props) => {
+  const handleRegister = async (values) => {
+    const result = await registerUser(values);
+    if (!result.status) return toast.error("خطا در ثبت نام");
+    if (result.status === 200) {
+      toast.success("ثبت نام با موفقیت انجام شد");
+      storeToken(result.data);
+      return (window.location = "/");
+    } else return toast.error(`خطا کد : ${result.status.toString()} رخ داد`);
+  };
+
   const validationSchema = Yup.object({
     username: Yup.string().required("نام کاربری را وارد کنید"),
     email: Yup.string()
@@ -17,8 +28,8 @@ const Register = (props) => {
     password: Yup.string().required("رمز عبور را وارد کنید"),
   });
   const formik = useFormik({
-    initialValues: { email: "", username: "", password: "", image: undefined },
-    onSubmit: (values) => alert(JSON.stringify(values)),
+    initialValues: { email: "", username: "", password: "" },
+    onSubmit: handleRegister,
     validationSchema,
   });
   return (
@@ -26,7 +37,6 @@ const Register = (props) => {
       <Helmet>
         <title>ثبت نام در میم فایندر</title>
       </Helmet>
-      <IconHolder onClick={() => props.history.push('/')} iconName="home" className="register__homeButton" />
       <div className="register__fromContainer">
         <h1 className="register__lable">ثبت نام در میم فایندر</h1>
         <form onSubmit={formik.handleSubmit} className="register__form">
@@ -80,7 +90,11 @@ const Register = (props) => {
         <Link
           to="/login"
           className="login__subText"
-          style={{ textDecoration: "none",marginTop : "0.5rem",color : "black" }}
+          style={{
+            textDecoration: "none",
+            marginTop: "0.5rem",
+            color: "black",
+          }}
         >
           اکانت داری؟ خب برو توش
         </Link>

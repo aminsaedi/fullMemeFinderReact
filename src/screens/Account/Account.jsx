@@ -117,7 +117,7 @@ const Account = (props) => {
         <div className="account__mainUserInfo__image">
           <img
             className="account__avatar"
-            src="http://172.20.10.3:9000/users/user.png"
+            src={user.image}
             alt="user"
           />
           <div className="account__changeAvatarButtonContainer">
