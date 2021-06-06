@@ -24,14 +24,14 @@ const Search = (props) => {
   const [totalPages, setTotalPages] = useState(1);
   const [hasPrevPage, setHasPrevPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState("-createDate");
   const [totalItems, setTotalItems] = useState(0);
 
   const sortValues = [
-    { value: "createDate", label: "جدید ترین" },
-    { value: "-createDate", label: "قدیمی ترین" },
-    { value: "byLikes", label: "بیشترن لایک" },
-    { value: "-byLikes", label: "کمترین لایک" },
+    { value: "-createDate", label: "جدید ترین" },
+    { value: "createDate", label: "قدیمی ترین" },
+    { value: "-likesCount", label: "بیشترن لایک" },
+    { value: "likesCount", label: "کمترین لایک" },
   ];
 
   const getAllKeywords = async () => {
@@ -59,7 +59,13 @@ const Search = (props) => {
       setHasPrevPage(result.data.hasPrevPage);
       setHasNextPage(result.data.hasNextPage);
       setState("success");
-    } else setState("error");
+    } else if (result.status && result.data && result.status !== 200) {
+      toast.error(result.data.message ? result.data.message : "خطایی رخ داد");
+      setState("error");
+    } else {
+      toast.error("خطای ناشناخته. با پشتیبانی تماس بگیرید");
+      setState("error");
+    }
   };
 
   const filterKeywords = (keys) => {
@@ -83,6 +89,7 @@ const Search = (props) => {
 
   const handleSortSelector = (newValue) => {
     setSortBy(newValue.value);
+    // getFilteredMemes();
   };
 
   useEffect(() => {
@@ -94,6 +101,7 @@ const Search = (props) => {
     getFilteredMemes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
+
 
   return (
     <div className="search">
@@ -109,7 +117,7 @@ const Search = (props) => {
             onChange={handleSortSelector}
           />
         </div>
-        <div className="search__action">
+        {/* <div className="search__action">
           <p className="search__action__title">فقط توسط کاربران</p>
           <ButtonGroup
             items={[
@@ -119,7 +127,7 @@ const Search = (props) => {
             activeItem={onlyByRegisteredUsers}
             onChange={handleChangeByUserFilter}
           />
-        </div>
+        </div> */}
         <div className="search__action">
           <p className="search__action__title">دسته بندی</p>
           <Select
@@ -129,6 +137,7 @@ const Search = (props) => {
             placeholder="دسته بندی"
             isRtl
             onChange={handleKeywordsSelector}
+            noOptionsMessage={() => "هیج دسته بندی ای پیدا نشد"}
           />
         </div>
         <div className="search__action search__action__button">

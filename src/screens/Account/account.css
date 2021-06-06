@@ -1,0 +1,123 @@
+.account{
+    background-color: #f1f3f5;
+    /* height: 100vh; */
+    width: 100vw;
+}
+.account__mainUserInfo{
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    margin : 0 auto
+}
+.account__mainUserInfo__image{
+    /* background: tomato; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.account__mainUserInfo__username{
+    text-align: center;
+    padding: 1rem 0;
+}
+.account__avatar{
+    width: 25rem;
+    height: 25rem;
+    border-radius: 5rem;
+    margin: 10rem 0 2rem;
+}
+.account__changeAvatarButtonContainer {
+ margin-bottom: 3rem;   
+}
+.account__telegramInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.account__telegramInfo__status--conected{
+    background: rgba(128, 255, 0, 0.753);
+    border-radius: 3rem;
+    font-size: 2rem;
+    padding: 1rem 3rem;
+    color: rgb(48, 48, 48);
+}
+.account__telegramInfo__status--disconnected{
+    background: rgba(255, 27, 27, 0.753);
+    border-radius: 3rem;
+    font-size: 2rem;
+    padding: 1rem 3rem;
+    color: rgb(247, 247, 247);
+}
+.account__telegramInfo__helper{
+    width: 85%;
+    min-width: 85%;
+    max-width: 85%;
+    font-size: 2rem;
+    height: 5rem;
+}
+.account__dangerZone{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 3rem 0;
+}
+.account__dangerZone__button{
+    display: block;
+    background: #d9534f;
+    font-size: 2rem;
+    outline: 0;
+    border: 0;
+    border-radius: 1.5rem;
+    font-family: Vazir;
+    color: white;
+    padding: 1rem;
+    margin: 0.5rem;
+    cursor: pointer;
+}
+
+.account__sudoMode{
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.account__sudoMode__topTitle{
+    color: red;
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+
+}
+.account__sudoMode__title{
+    margin: 0 0 0.5rem;
+}
+.account__sudoMode__input{
+    /* width: 100%; */
+    display: block;
+    font-size: 2rem;
+    height: 3rem;
+}
+.account__sudoMode__button{
+    display: block;
+    background: #d9534f;
+    outline: 0;
+    border: 0;
+    border-radius: 2rem;
+    font-size: 2rem;
+    color: white;
+    font-family: Vazir;
+    padding: 0.5rem 1rem;
+    margin : 2rem 0;
+    cursor: pointer;
+    width: 100%;
+}
+
+@media screen and (min-width : 970px) {
+    .account__dangerZone{
+        flex-direction: row;
+    }
+}

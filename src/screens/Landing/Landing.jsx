@@ -6,23 +6,17 @@ import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 
 import AuthContext from "../../auth/context";
-import { removeToken } from "../../auth/storage";
 import AppButton from "../../components/AppButton/AppButton";
-import Select from "react-select";
-import IconHolder from "../../components/IconHolder/IconHolder";
 import "./landing.css";
 import Card from "../../components/Card/Card";
 import { getAllMemes } from "../../api/memes";
 // import { getWelcomeMessage } from "../../api/main";
-import { getKeywords } from "../../api/keywords";
 import likeMemeHelper from "../../utilities/likeMeme";
 import telegramMemeHelper from '../../utilities/telegramMeme'
 
 const Landing = (props) => {
   const { user } = useContext(AuthContext);
   const [memes, setMemes] = useState([]);
-  const [keywords, setKeywords] = useState([]);
-  const [selectedKeyword, setSelectedKeyword] = useState(null);
   const getMemes = async () => {
     const result = await getAllMemes(10);
     if (!result.status) return toast.error("خطا در ارتباط با سرور");
@@ -36,23 +30,10 @@ const Landing = (props) => {
   //   else if (result.status === 200)
   //     return toast.info(result.data.message, { position: "bottom-center" });
   // };
-  const getAllKeywords = async () => {
-    const result = await getKeywords();
-    if (result.status !== 200) {
-      if (result.data) return toast.error(result.data.message);
-      else return toast.error("خطا در دیافت کیورد ها از سرور");
-    }
-    if (result.status === 200) return setKeywords(result.data);
-  };
-  const filterKeywords = (keys) => {
-    let newKeys = [];
-    newKeys = keys.map((key) => ({ value: key._id, label: key.title }));
-    return newKeys;
-  };
+  
   useEffect(() => {
     getMemes();
     // getServerMessage();
-    getAllKeywords();
   }, []);
   
   return (
@@ -60,43 +41,15 @@ const Landing = (props) => {
       <Helmet>
         <title>میم فایندر</title>
       </Helmet>
-      <div className="landing__topActions">
-        <IconHolder
-          iconName="add"
-          style={{ marginRight: "1rem" }}
-          onClick={() => props.history.push("/add")}
-        />
-        <IconHolder
-          image={user ? user.image : null}
-          iconName={!user ? "person" : null}
-          onClick={() => {
-            if (!user) props.history.push("/login");
-            else {
-              removeToken();
-              window.location = "/";
-            }
-          }}
-        />
-      </div>
       <h1 className="landing__mainText">به میم فایند خوش اومدی</h1>
-      <Select
-        style={{ width: "100%" }}
-        isRtl
-        className="add__selectKeyWord"
-        onChange={(selected) => setSelectedKeyword(selected)}
-        options={filterKeywords(keywords)}
-        noOptionsMessage={() => "چیزی نجستم! بزور بگردم؟"}
-        // isLoading
-        isClearable
-        placeholder="دنبال میم میگردی؟"
-      ></Select>
       <AppButton
         style={{
           width: "75%",
           marginTop: "1rem",
-          cursor: selectedKeyword ? "pointer" : "not-allowed",
+          cursor:  "pointer",
         }}
-        placeholder="جستجو"
+        placeholder="جستجو میم"
+        onClik={() => props.history.push("/search")}
       />
       {memes && (
         <Slider

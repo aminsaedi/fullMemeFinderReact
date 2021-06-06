@@ -32,6 +32,7 @@ export const searchMemes = (
   keywords && keywords.forEach((key) => {
     stringModel = stringModel.concat(`&keywords=${key}`);
   });
+  console.log(`/search?page=${page}&limit=${limit}&sortBy=${sortBy}&createdByUser=${createdByUser}${stringModel}`)
   return trackPromise(
     client.get(
       base +

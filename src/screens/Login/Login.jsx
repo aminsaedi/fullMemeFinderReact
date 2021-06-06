@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 import { storeToken } from "../../auth/storage";
 import "./login.css";
-import IconHolder from "../../components/IconHolder/IconHolder";
 import { loginUser } from "../../api/users";
 
 const Login = (props) => {
@@ -21,7 +20,10 @@ const Login = (props) => {
     if (result.status === 200) {
       toast.info("ورود موفقیت آمیز بود");
       storeToken(result.data);
-      window.location = "/";
+      const { state } = props.location;
+      // console.log(state)
+      window.location = state && state.from ? state.from.pathname : "/";
+      // window.location = "/";
     } else if (result.status !== 200) {
       toast.error("مشکل داریم");
       if (result.data) return toast.error(result.data.message);
@@ -39,11 +41,7 @@ const Login = (props) => {
       <Helmet>
         <title>ورود به میم فایندر</title>
       </Helmet>
-      <IconHolder
-        onClick={() => props.history.push("/")}
-        iconName="home"
-        className="register__homeButton"
-      />
+     
       <div className="login__fromContainer">
         <h1 className="login__lable">ورود به میم فایندر</h1>
         <form className="login__form" onSubmit={formik.handleSubmit}>
