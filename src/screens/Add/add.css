@@ -2,16 +2,18 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+  
 }
 .add__formTitle {
   font-size: 4rem;
 }
 .add__fromContainer {
   width: 80%;
+  margin: 5rem auto;
   border-radius: 50px;
   background: #e0e0e0;
   box-shadow: 10px 10px 20px #868686, -10px -10px 20px #ffffff;

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { postNewMeme } from "../../api/memes";
 import { getKeywords, addNewKeyword } from "../../api/keywords";
 import "./add.css";
-import IconHolder from "../../components/IconHolder/IconHolder";
+import SafeView from "../../components/SafeView/SafeView";
 
 const Add = (props) => {
   const handleChange = async (newValue, actionMeta, removedValue) => {
@@ -16,11 +16,16 @@ const Add = (props) => {
       const result = await addNewKeyword(newValue[newValue.length - 1].value);
       if (result.status === 200) {
         getAllKeywords();
-        const newSelectedKeyword = newValue.find(key => key.__isNew__);
-        const newSelectedOptions = newValue.filter(item => item !== newSelectedKeyword);
-        console.log(result.data)
-        newSelectedOptions.push({value : result.data._id,label : result.data.title});
-        setSelectedKeywords(newSelectedOptions)
+        const newSelectedKeyword = newValue.find((key) => key.__isNew__);
+        const newSelectedOptions = newValue.filter(
+          (item) => item !== newSelectedKeyword
+        );
+        console.log(result.data);
+        newSelectedOptions.push({
+          value: result.data._id,
+          label: result.data.title,
+        });
+        setSelectedKeywords(newSelectedOptions);
         toast.success("کیورد اضافه شد");
       } else if (result.status === 401) {
         setLoading(false);
@@ -77,68 +82,66 @@ const Add = (props) => {
     formData.append("image", selectedImage);
     const result = await postNewMeme(formData);
     if (result.status === 200) toast("میم با موفقیت افزوده شد");
-    else if (result.status !== 200) alert(result.status)
+    else if (result.status !== 200) alert(result.status);
   };
   return (
-    <div className="add">
-      <Helmet>
-        <title>افزودن میم</title>
-      </Helmet>
-      <IconHolder
-        onClick={() => props.history.push("/")}
-        iconName="home"
-        className="register__homeButton"
-      />
-      <div className="add__fromContainer">
-        <h1 className="add__formTitle">افزودن میم</h1>
-        <CreatableSelect
-          value={selectedKeywords}
-          placeholder="کیورد های میم"
-          formatCreateLabel={createPlaceHolder}
-          className="add__selectKeyWord"
-          isMulti
-          isRtl
-          onChange={handleChange}
-          noOptionsMessage={() => "تموم کیورد هارو انتخاب کردی"}
-          options={filterKeywords(keywords)}
-          isLoading={loading}
-          allowCreateWhileLoading={false}
-        />
-        <Dropzone
-          maxFiles={1}
-          maxSize={5000000}
-          multiple={false}
-          accept="image/*"
-          onDrop={(acceptedFiles) => {
-            toast.info("میم انتخاب شد");
-            setSelectedImage(acceptedFiles[0]);
-          }}
-        >
-          {({ getRootProps, getInputProps }) => (
-            <section style={{ cursor: "pointer" }}>
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p>
-                  فایل میمی که میخوایی اپلود کنی رو انتخاب کن یا درگش کن اینجا
-                  ولش بده
-                </p>
-              </div>
-            </section>
-          )}
-        </Dropzone>
-        <button
-          type="button"
-          className="add__form__submitButton"
-          disabled={selectedKeywords.length <= 0}
-          style={{
-            cursor: selectedKeywords.length <= 0 ? "not-allowed" : "pointer",
-          }}
-          onClick={handleAddMeme}
-        >
-          افزودن میم
-        </button>
+    <SafeView>
+      <div className="add">
+        <Helmet>
+          <title>افزودن میم</title>
+        </Helmet>
+
+        <div className="add__fromContainer">
+          <h1 className="add__formTitle">افزودن میم</h1>
+          <CreatableSelect
+            value={selectedKeywords}
+            placeholder="کیورد های میم"
+            formatCreateLabel={createPlaceHolder}
+            className="add__selectKeyWord"
+            isMulti
+            isRtl
+            onChange={handleChange}
+            noOptionsMessage={() => "تموم کیورد هارو انتخاب کردی"}
+            options={filterKeywords(keywords)}
+            isLoading={loading}
+            allowCreateWhileLoading={false}
+          />
+          <Dropzone
+            maxFiles={1}
+            maxSize={5000000}
+            multiple={false}
+            accept="image/*"
+            onDrop={(acceptedFiles) => {
+              toast.info("میم انتخاب شد");
+              setSelectedImage(acceptedFiles[0]);
+            }}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <section style={{ cursor: "pointer" }}>
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p>
+                    فایل میمی که میخوایی اپلود کنی رو انتخاب کن یا درگش کن اینجا
+                    ولش بده
+                  </p>
+                </div>
+              </section>
+            )}
+          </Dropzone>
+          <button
+            type="button"
+            className="add__form__submitButton"
+            disabled={selectedKeywords.length <= 0}
+            style={{
+              cursor: selectedKeywords.length <= 0 ? "not-allowed" : "pointer",
+            }}
+            onClick={handleAddMeme}
+          >
+            افزودن میم
+          </button>
+        </div>
       </div>
-    </div>
+    </SafeView>
   );
 };
 

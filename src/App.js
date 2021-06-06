@@ -15,6 +15,8 @@ import Register from "./screens/Register/Register";
 import Search from "./screens/Search/Search";
 import Account from "./screens/Account/Account";
 import ProtectedRoute from "./utilities/ProtectedRoute";
+import Report from "./screens/Report/Report";
+import Notfound from "./screens/NotFound/NotFound";
 
 const override = css`
   display: block;
@@ -69,8 +71,10 @@ const App = () => {
             <Route path="/add" component={Add} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path='/report' component={Report} />
             <ProtectedRoute path="/account" Component={Account} />
             <Route path="/" exact component={Landing} />
+            <Route path="*" component={Notfound} />
           </Switch>
         </main>
         {promiseInProgress && (

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Select from "react-select";
 import ReactiveButton from "reactive-button";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 import AuthContext from "../../auth/context";
 import likeMemeHelper from "../../utilities/likeMeme";
@@ -12,6 +13,7 @@ import { getKeywords } from "../../api/keywords";
 import "./search.css";
 import Paginaitor from "../../components/Paginaitor/Paginaitor";
 import { searchMemes } from "../../api/memes";
+import SafeView from "../../components/SafeView/SafeView";
 
 const Search = (props) => {
   const { user } = useContext(AuthContext);
@@ -102,22 +104,27 @@ const Search = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
-
   return (
-    <div className="search">
-      <h1 className="search__header">جستجو در میم فایندر</h1>
-      <div className="search__actionsContainer">
-        <div className="search__action">
-          <p className="search__action__title">ترتیب نمایش</p>
-          <Select
-            className="search__optionsSelector"
-            options={sortValues}
-            defaultValue={sortValues[0]}
-            isRtl
-            onChange={handleSortSelector}
-          />
-        </div>
-        {/* <div className="search__action">
+    <SafeView>
+      <div className="search">
+        <Helmet>
+          <title>جستجو در میم فایندر</title>
+        </Helmet>
+
+        <h1 className="search__header">جستجو در میم فایندر</h1>
+        <div className="search__actionsContainer">
+          <div className="search__action">
+            <p className="search__action__title">ترتیب نمایش</p>
+            <Select
+              className="search__optionsSelector topSelector"
+              options={sortValues}
+              defaultValue={sortValues[0]}
+              isRtl
+              onChange={handleSortSelector}
+              
+            />
+          </div>
+          {/* <div className="search__action">
           <p className="search__action__title">فقط توسط کاربران</p>
           <ButtonGroup
             items={[
@@ -128,67 +135,68 @@ const Search = (props) => {
             onChange={handleChangeByUserFilter}
           />
         </div> */}
-        <div className="search__action">
-          <p className="search__action__title">دسته بندی</p>
-          <Select
-            className="search__optionsSelector"
-            options={filterKeywords(keywords)}
-            isMulti
-            placeholder="دسته بندی"
-            isRtl
-            onChange={handleKeywordsSelector}
-            noOptionsMessage={() => "هیج دسته بندی ای پیدا نشد"}
-          />
-        </div>
-        <div className="search__action search__action__button">
-          {/* <p className="search__action__title">جستجو</p> */}
-          <ReactiveButton
-            buttonState={state}
-            onClick={onClickHandler}
-            idleText="جستجو"
-            loadingText="در حال جستجو"
-            successText="جستجو موفق"
-            errorText="خطایی رخ داد"
-            rounded
-            animation
-            block
-            messageDuration={2000}
-            style={{ fontFamily: "Vazir", fontSize: "1.8rem" }}
-          />
-        </div>
-      </div>
-      <div className="search__results">
-        {memes &&
-          memes.map((meme) => (
-            <Card
-              key={meme._id}
-              meme={meme}
-              likes={meme.likes}
-              onClick={() => props.history.push("/detail/" + meme._id)}
-              onLike={async () => {
-                await likeMemeHelper(user, meme, meme.likes);
-                await getFilteredMemes();
-              }}
-              onTelegram={() => telegramHelper(user, meme._id)}
+          <div className="search__action">
+            <p className="search__action__title">دسته بندی</p>
+            <Select
+              className="search__optionsSelector"
+              options={filterKeywords(keywords)}
+              isMulti
+              placeholder="دسته بندی"
+              isRtl
+              onChange={handleKeywordsSelector}
+              noOptionsMessage={() => "هیج دسته بندی ای پیدا نشد"}
             />
-          ))}
+          </div>
+          <div className="search__action search__action__button">
+            {/* <p className="search__action__title">جستجو</p> */}
+            <ReactiveButton
+              buttonState={state}
+              onClick={onClickHandler}
+              idleText="جستجو"
+              loadingText="در حال جستجو"
+              successText="جستجو موفق"
+              errorText="خطایی رخ داد"
+              rounded
+              animation
+              block
+              messageDuration={2000}
+              style={{ fontFamily: "Vazir", fontSize: "1.8rem" }}
+            />
+          </div>
+        </div>
+        <div className="search__results">
+          {memes &&
+            memes.map((meme) => (
+              <Card
+                key={meme._id}
+                meme={meme}
+                likes={meme.likes}
+                onClick={() => props.history.push("/detail/" + meme._id)}
+                onLike={async () => {
+                  await likeMemeHelper(user, meme, meme.likes);
+                  await getFilteredMemes();
+                }}
+                onTelegram={() => telegramHelper(user, meme._id)}
+              />
+            ))}
+        </div>
+        <div className="search__paginationContainer">
+          <Paginaitor
+            onChange={(action) =>
+              action === "nextPage"
+                ? setCurrentPage(currentPage + 1)
+                : setCurrentPage(currentPage - 1)
+            }
+            totalItems={totalItems}
+            currentPage={currentPage}
+            itemPerPage={16}
+            hasNextPage={hasNextPage}
+            hasPrevPage={hasPrevPage}
+            totalPages={totalPages}
+          />
+        </div>
       </div>
-      <div className="search__paginationContainer">
-        <Paginaitor
-          onChange={(action) =>
-            action === "nextPage"
-              ? setCurrentPage(currentPage + 1)
-              : setCurrentPage(currentPage - 1)
-          }
-          totalItems={totalItems}
-          currentPage={currentPage}
-          itemPerPage={16}
-          hasNextPage={hasNextPage}
-          hasPrevPage={hasPrevPage}
-          totalPages={totalPages}
-        />
-      </div>
-    </div>
+    </SafeView>
   );
 };
 
