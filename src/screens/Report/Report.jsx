@@ -1,13 +1,26 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import "./report.css";
 import SafeView from "../../components/SafeView/SafeView";
 
 const Report = (props) => {
+  const handleSubmit = (values) => {
+    alert(JSON.stringify(values));
+  };
+  const validationSchema = Yup.object({
+    title: Yup.string(),
+    body: Yup.string()
+      .required("متن گزارش را وارد کنید")
+      .max(500, "حداکثر طول پیام ۵۰۰ کاراکتر است"),
+  });
+
   const formik = useFormik({
     initialValues: { title: "", body: "" },
+    onSubmit: handleSubmit,
+    validationSchema,
   });
   return (
     <SafeView>
@@ -31,7 +44,11 @@ const Report = (props) => {
             name="title"
             id="title"
             placeholder="عنوان گزارش"
+            {...formik.getFieldProps("title")}
           />
+          {formik.touched.title && formik.errors.title ? (
+            <div className="login__form__error">{formik.errors.title}</div>
+          ) : null}
           <label className="report__form__lable" htmlFor="body">
             متن گزارش
           </label>
@@ -41,12 +58,22 @@ const Report = (props) => {
             id="body"
             cols="30"
             rows="10"
+            {...formik.getFieldProps("body")}
           ></textarea>
-          <button type="submit" className="report__form__button">
+          {formik.touched.body && formik.errors.body ? (
+            <div className="login__form__error">{formik.errors.body}</div>
+          ) : null}
+          <button
+            disabled={Object.keys(formik.errors).length}
+            type="submit"
+            className="report__form__button"
+          >
             ارسال گزارش
           </button>
         </form>
-        <h2 className="report__subTitle">ارسال گزارش از طریق بات تلگرام</h2>
+        <h2 className="report__subTitle" style={{ marginTop: "5rem" }}>
+          ارسال گزارش از طریق بات تلگرام
+        </h2>
         <p className="report__text">
           میتونی هم توی تلگرام برای پشتیبانی گزارش مشکل بفرستی. فقط کافیه توی
           منو بات گزارش مشکل رو انتخاب کنی و بعدش متن گزارشو بفرسی

@@ -57,6 +57,9 @@
   height: 10rem;
   margin: 0 auto1rem auto;
   font-family: Vazir;
+  text-align: right;
+  direction: rtl;
+  font-size: 2rem;
 }
 .report__form__button {
   width: 70%;
@@ -72,6 +75,7 @@
   background: #d1d8ec;
   -webkit-box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
   box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+  cursor: pointer;
 }
 
 @media screen and (min-width : 970px) {

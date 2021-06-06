@@ -13,13 +13,13 @@ body {
   line-height: 1.5;
 }
 
-.loaderContainer{
+.loaderContainer {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  top : 0;
+  top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-self: center;
@@ -49,8 +49,11 @@ body {
 
 /* Position and sizing of clickable cross button */
 .bm-cross-button {
+  position: fixed;
   height: 24px;
   width: 24px;
+  left: 235px;
+  top: 100px;
 }
 
 /* Color/shape of close button cross */
@@ -95,9 +98,46 @@ Note: Beware of modifying this element as it can break the animations - you shou
   background: rgba(0, 0, 0, 0.3);
 }
 
-.menu__item{
+.menu__item {
   text-decoration: none;
   color: white;
   text-align: center;
   margin: 2rem 0;
+}
+
+.appTopBar {
+  background-color: #f1f3f5;
+  width: 100%;
+  height: 15vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.appTopBar__text {
+  text-align: center;
+}
+.appTopBar__menuIcon {
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: tomato; */
+}
+.appTopBar__textContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+}
+
+@media screen and (min-width : 970px) {
+  .appTopBar__menuIcon{
+    width: 5%;
+  }
+  .appTopBar__textContainer{
+    width: 95%;
+  }
 }

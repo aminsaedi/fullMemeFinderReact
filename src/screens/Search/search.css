@@ -45,7 +45,7 @@
   width: 100%;
   z-index: 100;
 }
-.topSelector{
+.topSelector {
   z-index: 200;
 }
 
@@ -68,7 +68,16 @@
   grid-row-gap: 20px;
 }
 
-@media screen and (min-width: 970px) {
+@media screen and (min-width: 850px) {
+  .search__results {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 2rem;
+    grid-row-gap: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
   .search__actionsContainer {
     width: 80%;
     flex-direction: row;
