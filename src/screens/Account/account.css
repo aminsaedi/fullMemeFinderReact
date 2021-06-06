@@ -24,7 +24,7 @@
     width: 25rem;
     height: 25rem;
     border-radius: 5rem;
-    margin: 10rem 0 2rem;
+    margin: 5rem 0 2rem;
 }
 .account__changeAvatarButtonContainer {
  margin-bottom: 3rem;   
@@ -90,10 +90,12 @@
     color: red;
     font-size: 2rem;
     margin: 0 0 0.5rem;
+    text-align: center;
 
 }
 .account__sudoMode__title{
     margin: 0 0 0.5rem;
+    text-align: center;
 }
 .account__sudoMode__input{
     /* width: 100%; */

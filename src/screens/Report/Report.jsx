@@ -2,13 +2,23 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 import "./report.css";
+import { postNewReport } from "../../api/reports";
 import SafeView from "../../components/SafeView/SafeView";
 
 const Report = (props) => {
-  const handleSubmit = (values) => {
-    alert(JSON.stringify(values));
+  const handleSubmit = async (values) => {
+    const result = await postNewReport(values);
+    if (!result.status) return toast.error("خطای ناشناخته در ثبت گزارش");
+    else if (result.status && result.status === 200) {
+      toast.success("گزارش با موفقیت ثبت شد");
+      return props.history.push("/");
+    } else if (result.data && result.data.message) {
+      console.log(result.data);
+      return toast.error(result.data.message);
+    }
   };
   const validationSchema = Yup.object({
     title: Yup.string(),

@@ -74,7 +74,6 @@ const App = () => {
         customBurgerIcon={false}
         customCrossIcon={
           <Hamburger
-          
             label="Show menu"
             size={48}
             direction="left"
@@ -98,9 +97,11 @@ const App = () => {
         <NavLink className="menu__item" to="/add">
           افزودن میم
         </NavLink>
-        <NavLink className="menu__item" to="/report">
-          گزارش مشکل
-        </NavLink>
+        {user && (
+          <NavLink className="menu__item" to="/report">
+            گزارش مشکل
+          </NavLink>
+        )}
         <NavLink className="menu__item" to="/contact">
           تماس با من
         </NavLink>
@@ -112,7 +113,7 @@ const App = () => {
         <Route path="/add" component={Add} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/report" component={Report} />
+        <ProtectedRoute path="/report" Component={Report} />
         <ProtectedRoute path="/account" Component={Account} />
         <Route path="/" exact component={Landing} />
         <Route path="*" component={Notfound} />

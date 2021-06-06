@@ -1,17 +1,18 @@
 .register {
+  background-color: #f1f3f5;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+  padding-top: 5rem;
 }
 .register__fromContainer {
   width: 80%;
+  margin: 0 auto;
   border-radius: 50px;
   background: #e0e0e0;
-
   box-shadow: 10px 10px 20px #868686, -10px -10px 20px #ffffff;
   text-align: center;
   display: flex;

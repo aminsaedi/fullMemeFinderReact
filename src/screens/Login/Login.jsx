@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,8 +8,11 @@ import { toast } from "react-toastify";
 import { storeToken } from "../../auth/storage";
 import "./login.css";
 import { loginUser } from "../../api/users";
+import AuthContext from "../../auth/context";
 
 const Login = (props) => {
+  const { user } = useContext(AuthContext);
+
   const validationSchema = Yup.object({
     user: Yup.string().required("نام کاربری را وارد کنید"),
     password: Yup.string().required("رمز عبور را وارد کنید"),
@@ -36,12 +39,16 @@ const Login = (props) => {
     onSubmit: handleLogin,
     validationSchema,
   });
+  if (user) {
+    toast.error("غیر مجاز");
+    props.history.push("/");
+  }
   return (
     <div className="login">
       <Helmet>
         <title>ورود به میم فایندر</title>
       </Helmet>
-     
+
       <div className="login__fromContainer">
         <h1 className="login__lable">ورود به میم فایندر</h1>
         <form className="login__form" onSubmit={formik.handleSubmit}>
