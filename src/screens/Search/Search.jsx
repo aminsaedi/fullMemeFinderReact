@@ -8,7 +8,7 @@ import AuthContext from "../../auth/context";
 import likeMemeHelper from "../../utilities/likeMeme";
 import telegramHelper from "../../utilities/telegramMeme";
 import Card from "../../components/Card/Card";
-import ButtonGroup from "../../components/ButtonGroup/ButtonGroup";
+// import ButtonGroup from "../../components/ButtonGroup/ButtonGroup";
 import { getKeywords } from "../../api/keywords";
 import "./search.css";
 import Paginaitor from "../../components/Paginaitor/Paginaitor";
@@ -21,7 +21,10 @@ const Search = (props) => {
   const [keywords, setKeywords] = useState([]);
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [memes, setMemes] = useState([]);
-  const [onlyByRegisteredUsers, setOnlyByRegisteredUsers] = useState(false);
+  const [
+    onlyByRegisteredUsers,
+    //  ,setOnlyByRegisteredUsers
+  ] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [hasPrevPage, setHasPrevPage] = useState(false);
@@ -76,10 +79,10 @@ const Search = (props) => {
     return newKeys;
   };
 
-  const handleChangeByUserFilter = (item) => {
-    if (item.id === true) setOnlyByRegisteredUsers(true);
-    else if (item.id === false) setOnlyByRegisteredUsers(false);
-  };
+  // const handleChangeByUserFilter = (item) => {
+  //   if (item.id === true) setOnlyByRegisteredUsers(true);
+  //   else if (item.id === false) setOnlyByRegisteredUsers(false);
+  // };
   const onClickHandler = () => {
     getFilteredMemes();
   };
@@ -121,7 +124,6 @@ const Search = (props) => {
               defaultValue={sortValues[0]}
               isRtl
               onChange={handleSortSelector}
-              
             />
           </div>
           {/* <div className="search__action">

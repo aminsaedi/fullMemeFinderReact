@@ -62,7 +62,7 @@ const App = () => {
           />
         </div>
         <div className="appTopBar__textContainer">
-          <p className="appTopBar__text">{message}</p>
+          <p  className="appTopBar__text">{message}</p>
         </div>
       </div>
       <Menu
@@ -85,24 +85,53 @@ const App = () => {
           />
         }
       >
-        <NavLink className="menu__item" to="/">
+        <NavLink
+          onClick={() => setIsMenuOpen(false)}
+          className="menu__item"
+          to="/"
+        >
           میم فایندر
         </NavLink>
-        <NavLink className="menu__item" to={user ? "/account" : "/login"}>
+        <NavLink  onClick={() => setIsMenuOpen(false)}  className="menu__item" to={user ? "/account" : "/login"}>
           {user ? user.username : "ورود به اکانت"}
         </NavLink>
-        <NavLink className="menu__item" to="/search">
+        {!user && (
+          <NavLink
+            className="menu__item"
+            onClick={() => setIsMenuOpen(false)}
+            to="/register"
+          >
+            ایجاد اکانت
+          </NavLink>
+        )}
+        <NavLink
+          onClick={() => setIsMenuOpen(false)}
+          className="menu__item"
+          to="/search"
+        >
           جستجو میم
         </NavLink>
-        <NavLink className="menu__item" to="/add">
+        <NavLink
+          onClick={() => setIsMenuOpen(false)}
+          className="menu__item"
+          to="/add"
+        >
           افزودن میم
         </NavLink>
         {user && (
-          <NavLink className="menu__item" to="/report">
+          <NavLink
+            onClick={() => setIsMenuOpen(false)}
+            className="menu__item"
+            to="/report"
+          >
             گزارش مشکل
           </NavLink>
         )}
-        <NavLink className="menu__item" to="/contact">
+        <NavLink
+          onClick={() => setIsMenuOpen(false)}
+          className="menu__item"
+          to="/contact"
+        >
           تماس با من
         </NavLink>
       </Menu>

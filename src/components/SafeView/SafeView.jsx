@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import React from "react";
 
 import "./safeView.css";
-import { getWelcomeMessage } from "../../api/main";
 
 const SafeView = (props) => {
 
