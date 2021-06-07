@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { Helmet } from "react-helmet";
 import * as Yup from "yup";
+import Dropzone from "react-dropzone";
 
 import ReactiveButton from "reactive-button";
 
 import "./account.css";
 import AuthContext from "../../auth/context";
 import { removeToken, storeToken } from "../../auth/storage";
-import { resetTelegram } from "../../api/users";
+import { resetTelegram, updateAvatar } from "../../api/users";
 import SafeView from "../../components/SafeView/SafeView";
 
 const Account = (props) => {
@@ -18,10 +19,21 @@ const Account = (props) => {
   const [changeAvatarButtonState, setChangeAvatarButtonState] =
     useState("idle");
   const [sudoModeModal, setSudoModeModal] = useState(false);
+  const [changeAvatarModal, setChangeAvatarModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState();
+  const [filePreview, setFilePreview] = useState("");
 
-  const handleChangeAvatar = () => {
-    setChangeAvatarButtonState("loading");
-    setTimeout(() => setChangeAvatarButtonState("success"), 2000);
+  const handleChangeAvatar = async () => {
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    const result = await updateAvatar(formData);
+    if (!result.status) return toast.error("خطا در تغیر آواتار");
+    else if (result.status === 200) return toast.info(result.data.message);
+    else if (result.status && result.data)
+      return toast.error(
+        result.data.message || `خطا در تغیر آواتار ${result.status.toString()}`
+      );
+    else return toast.error("خطای ناشناخته در تغیر آواتار");
   };
 
   const handleResetTelegramAccount = async (values) => {
@@ -47,7 +59,69 @@ const Account = (props) => {
     onSubmit: handleResetTelegramAccount,
     validationSchema,
   });
-
+  const thumbs = (
+    <div
+      style={{
+        display: "inline-flex",
+        borderRadius: 2,
+        border: "1px solid #eaeaea",
+        marginBottom: 8,
+        marginRight: 8,
+        width: 100,
+        height: 100,
+        padding: 4,
+        boxSizing: "border-box",
+        cursor: "pointer",
+      }}
+      onClick={() => {
+        setSelectedImage(null);
+        setFilePreview("");
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          minWidth: 0,
+          overflow: "hidden",
+        }}
+      >
+        <img
+          src={filePreview}
+          style={{
+            display: "block",
+            width: "auto",
+            height: "100%",
+          }}
+          alt=""
+        />
+      </div>
+    </div>
+  );
+  const modalStyle = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(255, 255, 255, 0.75)",
+    },
+    content: {
+      position: "absolute",
+      top: "20%",
+      left: "10%",
+      right: "10%",
+      bottom: "35%",
+      border: "0.1rem solid #ccc",
+      boxShadow: "0 0 10px rgb(96 108 236 / 70%)",
+      background: "#fff",
+      overflow: "auto",
+      WebkitOverflowScrolling: "touch",
+      borderRadius: "0.5rem",
+      outline: "none",
+      padding: "20px",
+    },
+  };
   if (!user) return null;
   return (
     <SafeView>
@@ -56,36 +130,52 @@ const Account = (props) => {
           <title>{user.username}</title>
         </Helmet>
         <Modal
+          isOpen={changeAvatarModal}
+          ariaHideApp
+          shouldCloseOnOverlayClick
+          shouldCloseOnEsc
+          onRequestClose={() => setChangeAvatarModal(false)}
+          style={modalStyle}
+        >
+          <div className="account__avatarModal">
+            <Dropzone
+              maxFiles={1}
+              maxSize={3000000}
+              multiple={false}
+              accept="image/*"
+              onDrop={(acceptedFiles) => {
+                toast.info("میم انتخاب شد");
+                setSelectedImage(acceptedFiles[0]);
+                setFilePreview(URL.createObjectURL(acceptedFiles[0]));
+              }}
+            >
+              {({ getRootProps, getInputProps }) => (
+                <section style={{ cursor: "pointer" }}>
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p className="account__avatarModal__title">
+                      آواتار جدیدت رو انتخاب کن یا اینجا درگش کن
+                    </p>
+                  </div>
+                </section>
+              )}
+            </Dropzone>
+            {selectedImage && thumbs}
+            <button
+              className="account__avatarModal__button"
+              onClick={handleChangeAvatar}
+            >
+              تغیر آواتار
+            </button>
+          </div>
+        </Modal>
+        <Modal
           isOpen={sudoModeModal}
           ariaHideApp
           shouldCloseOnOverlayClick
           shouldCloseOnEsc
           onRequestClose={() => setSudoModeModal(false)}
-          style={{
-            overlay: {
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(255, 255, 255, 0.75)",
-            },
-            content: {
-              position: "absolute",
-              top: "20%",
-              left: "10%",
-              right: "10%",
-              bottom: "35%",
-              border: "0.1rem solid #ccc",
-              boxShadow: "0 0 10px rgb(96 108 236 / 70%)",
-              background: "#fff",
-              overflow: "auto",
-              WebkitOverflowScrolling: "touch",
-              borderRadius: "0.5rem",
-              outline: "none",
-              padding: "20px",
-            },
-          }}
+          style={modalStyle}
         >
           <div className="account__sudoMode">
             <h3 className="account__sudoMode__topTitle">
@@ -129,7 +219,10 @@ const Account = (props) => {
                 animation
                 messageDuration={2000}
                 rounded
-                onClick={handleChangeAvatar}
+                onClick={() => {
+                  setChangeAvatarModal(true);
+                  setChangeAvatarButtonState("loading");
+                }}
               />
             </div>
           </div>
@@ -152,7 +245,7 @@ const Account = (props) => {
               {user.telegramId ? "متصل" : "وصل نشده"}
             </span>
             <p style={{ textAlign: "center" }}>آموزش اتصال به ربات تلگرام</p>
-            <p style={{ textAlign: "center",maxWidth : "90%" }}>
+            <p style={{ textAlign: "center", maxWidth: "90%" }}>
               ابتدا{" "}
               <a
                 href="https://t.me/fullMemeFinderBot"

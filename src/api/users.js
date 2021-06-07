@@ -27,3 +27,11 @@ export const registerUser = (userData) =>
  */
 export const resetTelegram = (password) =>
   trackPromise(client.post(base + "/resetTelegram", { password }));
+
+/**
+ *
+ * @param {formData} formData formdata should contains image propery and max size is 3MB
+ * @returns Promis result of upddating avatar
+ */
+export const updateAvatar = (formData) =>
+  trackPromise(client.put(base + "/avatar", formData));

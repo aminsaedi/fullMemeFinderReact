@@ -138,7 +138,7 @@ const Add = (props) => {
           />
           <Dropzone
             maxFiles={1}
-            maxSize={5000000}
+            maxSize={3000000}
             multiple={false}
             accept="image/*"
             onDrop={(acceptedFiles) => {
