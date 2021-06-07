@@ -17,7 +17,10 @@
 }
 .detail__memeTitle {
   text-align: center;
-  font-size: 4rem;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .detail__subText {
   font-size: 2rem;

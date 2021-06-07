@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Helmet } from "react-helmet";
-import { FaTelegram, FaShare, FaDownload } from "react-icons/fa";
+import { FaTelegram, FaHeart, FaRegHeart, FaDownload } from "react-icons/fa";
+import { GoVerified } from "react-icons/go";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import moment from "jalali-moment";
@@ -10,6 +11,7 @@ import AuthContext from "../../auth/context";
 import { getMemeById } from "../../api/memes";
 import memeTelgramSender from "../../utilities/telegramMeme";
 import SafeView from "../../components/SafeView/SafeView";
+import likeMeme from "../../utilities/likeMeme";
 
 const Detail = () => {
   const { user } = useContext(AuthContext);
@@ -39,7 +41,7 @@ const Detail = () => {
           <img src={meme.file} alt="meme" className="detail__mainImage" />
         </div>
         <div className="detail__textContainer">
-          <h1 className="detail__memeTitle">{meme.likes.length}</h1>
+          <h1 className="detail__memeTitle"> <GoVerified color="dodgerblue" style={{marginRight : 5}} /> {" "}میم تایید شده </h1>
           <p className="detail__memeTags">کلید واژه های میم : </p>
           <div className="detail__tagsContainer">
             {meme.keywords.map((key) => (
@@ -54,16 +56,19 @@ const Detail = () => {
               <FaTelegram />
               <p>ارسال به اکانت تلگرام</p>
             </div>
-            <div className="detail__action">
+            <div className="detail__action" onClick={() => window.open(meme.file)} >
               <FaDownload />
               <p>دانلود میم</p>
             </div>
             <div
               className="detail__action"
-              onClick={() => toast.info("لینک میم کپی شد")}
+              onClick={async () => {
+                await likeMeme(user, meme, meme.likes);
+                await getMeme();
+              }}
             >
-              <FaShare />
-              <p>اشتراک گذاری</p>
+              {meme.likes.includes(user._id) ? <FaHeart /> : <FaRegHeart />}
+              <p>تعداد لایک : {toFarsiNumber(meme.likes.length)}</p>
             </div>
           </div>
           <p className="detail__subText">
