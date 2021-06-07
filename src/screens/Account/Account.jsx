@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -11,7 +11,7 @@ import ReactiveButton from "reactive-button";
 import "./account.css";
 import AuthContext from "../../auth/context";
 import { removeToken, storeToken } from "../../auth/storage";
-import { resetTelegram, updateAvatar } from "../../api/users";
+import { resetTelegram, updateAvatar, getAvatar } from "../../api/users";
 import SafeView from "../../components/SafeView/SafeView";
 
 const Account = (props) => {
@@ -22,18 +22,35 @@ const Account = (props) => {
   const [changeAvatarModal, setChangeAvatarModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
   const [filePreview, setFilePreview] = useState("");
+  const [userAvatar, setUserAvatar] = useState();
 
   const handleChangeAvatar = async () => {
     const formData = new FormData();
     formData.append("image", selectedImage);
     const result = await updateAvatar(formData);
     if (!result.status) return toast.error("خطا در تغیر آواتار");
-    else if (result.status === 200) return toast.info(result.data.message);
-    else if (result.status && result.data)
+    else if (result.status === 200) {
+      setChangeAvatarButtonState("success");
+      await getUserAvata();
+      setChangeAvatarModal(false);
+      return toast.info(result.data.message);
+    } else if (result.status && result.data) {
+      setChangeAvatarButtonState("error");
       return toast.error(
         result.data.message || `خطا در تغیر آواتار ${result.status.toString()}`
       );
-    else return toast.error("خطای ناشناخته در تغیر آواتار");
+    } else {
+      setChangeAvatarButtonState("error");
+      return toast.error("خطای ناشناخته در تغیر آواتار");
+    }
+  };
+  const getUserAvata = async () => {
+    const result = await getAvatar();
+    if (result.status === 200) return setUserAvatar(result.data);
+    else {
+      console.log(result);
+      return toast.error("خطا در دریافت آواتار");
+    }
   };
 
   const handleResetTelegramAccount = async (values) => {
@@ -59,6 +76,9 @@ const Account = (props) => {
     onSubmit: handleResetTelegramAccount,
     validationSchema,
   });
+  useEffect(() => {
+    getUserAvata();
+  }, []);
   const thumbs = (
     <div
       style={{
@@ -207,7 +227,7 @@ const Account = (props) => {
         </Modal>
         <div className="account__mainUserInfo">
           <div className="account__mainUserInfo__image">
-            <img className="account__avatar" src={user.image} alt="user" />
+            <img className="account__avatar" src={userAvatar} alt="user" />
             <div className="account__changeAvatarButtonContainer">
               <ReactiveButton
                 buttonState={changeAvatarButtonState}

@@ -35,3 +35,9 @@ export const resetTelegram = (password) =>
  */
 export const updateAvatar = (formData) =>
   trackPromise(client.put(base + "/avatar", formData));
+
+/**
+ *
+ * @returns user avatar image url
+ */
+export const getAvatar = () => trackPromise(client.get(base + "/avatar"));
