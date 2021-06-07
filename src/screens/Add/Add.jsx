@@ -43,10 +43,6 @@ const Add = (props) => {
       setSelectedKeywords(newValue);
       // console.log(removedValue)
     }
-    console.group("Value Changed");
-    console.log(newValue);
-    console.log(`action: ${actionMeta.action}`);
-    console.groupEnd();
     // setSelectedKeywords(newValue);
   };
   const createPlaceHolder = (strd) => "افزودنه کیورده " + strd;
@@ -55,6 +51,7 @@ const Add = (props) => {
   const [loading, setLoading] = useState(false);
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [selectedImage, setSelectedImage] = useState();
+  const [filePreview, setFilePreview] = useState("");
   const getAllKeywords = async () => {
     const result = await getKeywords();
     if (result.status !== 200) {
@@ -84,6 +81,39 @@ const Add = (props) => {
     if (result.status === 200) toast("میم با موفقیت افزوده شد");
     else if (result.status !== 200) alert(result.status);
   };
+  const thumbs = (
+    <div
+      style={{
+        display: "inline-flex",
+        borderRadius: 2,
+        border: "1px solid #eaeaea",
+        marginBottom: 8,
+        marginRight: 8,
+        width: 100,
+        height: 100,
+        padding: 4,
+        boxSizing: "border-box",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          minWidth: 0,
+          overflow: "hidden",
+        }}
+      >
+        <img
+          src={filePreview}
+          style={{
+            display: "block",
+            width: "auto",
+            height: "100%",
+          }}
+          alt=""
+        />
+      </div>
+    </div>
+  );
   return (
     <SafeView>
       <div className="add">
@@ -114,6 +144,7 @@ const Add = (props) => {
             onDrop={(acceptedFiles) => {
               toast.info("میم انتخاب شد");
               setSelectedImage(acceptedFiles[0]);
+              setFilePreview(URL.createObjectURL(acceptedFiles[0]));
             }}
           >
             {({ getRootProps, getInputProps }) => (
@@ -128,6 +159,7 @@ const Add = (props) => {
               </section>
             )}
           </Dropzone>
+          {selectedImage && thumbs}
           <button
             type="button"
             className="add__form__submitButton"

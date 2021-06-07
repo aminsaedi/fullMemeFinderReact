@@ -152,7 +152,7 @@ const Account = (props) => {
               {user.telegramId ? "متصل" : "وصل نشده"}
             </span>
             <p style={{ textAlign: "center" }}>آموزش اتصال به ربات تلگرام</p>
-            <p style={{ textAlign: "center" }}>
+            <p style={{ textAlign: "center",maxWidth : "90%" }}>
               ابتدا{" "}
               <a
                 href="https://t.me/fullMemeFinderBot"
@@ -161,7 +161,8 @@ const Account = (props) => {
               >
                 بات تلگرام میم فایند
               </a>{" "}
-              را استارت کنید بعدش متن داخل کادر زیر رو براش بفرستو بوووم وصل شد
+              را استارت کنید بعدش متن داخل کادر زیر رو براش بفرستو توی سایت ی
+              بار خروج از اکانت رو بزن و دوباره وارد شو بوووم وصل شد
             </p>
             <textarea
               className="account__telegramInfo__helper"

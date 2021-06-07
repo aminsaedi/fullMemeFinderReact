@@ -20,6 +20,7 @@ import Account from "./screens/Account/Account";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import Report from "./screens/Report/Report";
 import Notfound from "./screens/NotFound/NotFound";
+import Contact from "./screens/Contact/Contact";
 
 const override = css`
   display: block;
@@ -62,7 +63,7 @@ const App = () => {
           />
         </div>
         <div className="appTopBar__textContainer">
-          <p  className="appTopBar__text">{message}</p>
+          <p className="appTopBar__text">{message}</p>
         </div>
       </div>
       <Menu
@@ -92,7 +93,11 @@ const App = () => {
         >
           میم فایندر
         </NavLink>
-        <NavLink  onClick={() => setIsMenuOpen(false)}  className="menu__item" to={user ? "/account" : "/login"}>
+        <NavLink
+          onClick={() => setIsMenuOpen(false)}
+          className="menu__item"
+          to={user ? "/account" : "/login"}
+        >
           {user ? user.username : "ورود به اکانت"}
         </NavLink>
         {!user && (
@@ -145,6 +150,7 @@ const App = () => {
         <ProtectedRoute path="/report" Component={Report} />
         <ProtectedRoute path="/account" Component={Account} />
         <Route path="/" exact component={Landing} />
+        <Route path="/contact" component={Contact} />
         <Route path="*" component={Notfound} />
       </Switch>
 

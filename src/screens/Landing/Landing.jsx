@@ -63,9 +63,11 @@ const Landing = (props) => {
             width: "100%",
             marginTop: "4rem",
           }}
-          slidesToShow={1}
-          slidesToScroll={1}
+          // slidesToShow={3}
+          // slidesToScroll={3}
+          // rows={3}
           centerMode={true}
+          lazyLoad="progressive"
         >
           {memes.map((meme) => (
             <Card
